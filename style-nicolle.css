@@ -43,6 +43,8 @@ body{
     background-color:#ffebc6 ;
     border-radius: 10px;
 }
+
+
 /* style for questions */
 .questionsAppear{
     margin-top: 50px;
@@ -63,9 +65,12 @@ display: flex;
                 width: 450px;
     height: 250px;
     border-radius: 15px;
+            font-size: 30px;
+
 
 
 }
+
 /* style for answers */
 .answers ul{
     list-style: none;
@@ -80,8 +85,8 @@ display: flex;
     padding: 15px;
     border-radius: 10px;
     width: 300px;
-         margin: 25px;
-         transition: 0.3s ease;
+    margin: 25px;
+    transition: 0.3s ease;
 }
 .answers ul li:hover{
     transform: scale(1.05);
@@ -104,5 +109,30 @@ display: flex;
 .buttons h2:hover{
     transform: scale(1.1);
         background-color: #fff3dd;
+
+}
+@media only screen and (max-width: 767px) {
+    .nicolle-quizheader{
+        transform: scale(0.7);
+    }
+    .questionsAppear{
+        transform: scale(0.7);
+        margin-top: 0;
+    }
+    .answers ul{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .answers ul li{
+        width: 265px;
+        margin: 10px;
+    }
+    .buttons h2{
+        transform: scale(0.8);
+    }
+    .questions p{
+        font-size: 30px;
+    }
 
 }
