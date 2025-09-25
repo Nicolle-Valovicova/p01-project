@@ -1,12 +1,20 @@
-*{
-    background-image: url(https://wallpapers.com/images/hd/cookie-run-kingdom-action-rpg-tgbichpa9ymkvhhc.jpg);
-    background-size: cover;
-    height: 97vh;
-    
-    
+h1 {
+    text-align: center;
+    font-size: 60px;
+    color: white;
 }
 
-h1{
+p {
     text-align: center;
-  
+    font-size: 40px;
+    color: white;
+}
+
+* {
+
+    background-image: url('https://www.gamerefinery.com/wp-content/uploads/2021/10/cookie-run-kingdom-revenue-spike-header-image.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
 }
