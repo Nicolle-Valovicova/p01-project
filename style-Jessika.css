@@ -11,7 +11,7 @@ p {
     color: white;
 }
 
-* {
+body{
 
     background-image: url('https://www.gamerefinery.com/wp-content/uploads/2021/10/cookie-run-kingdom-revenue-spike-header-image.png');
     background-size: cover;
@@ -28,7 +28,10 @@ p {
     align-items: top center;
     max-width: 80rem;
     margin: 0 auto;
-    padding: 2 rem
+    padding: 2rem;
+    
+
+
 }
 
 .flex-column {
@@ -62,9 +65,13 @@ p {
     text-decoration: none;
     color: white;
     background:  linear-gradient(90deg, rgb(255,177,0, 0.6) );
+    border-radius: 4px;
 }
 
 .bnt:hover {
 cursor: pointer;
-box-shadow: 0 0.4rem 1.4rem 0 rgb();
+box-shadow: 0 0.4rem 1.4rem 0 rgba(237, 166, 1, 0.6);
+transition: transform 200ms;
+transform: scale(1.08);
 }
+
