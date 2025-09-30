@@ -20,7 +20,7 @@ fetch(ourQuestions)
     console.log(data.nicolle);
     let currentIndex = 0;
 
-    let randomAnswers = shuffle(data.nicolle[0].options);
+    let randomAnswers = shuffle(data.nicolle[i].options);
     console.log(randomAnswers);
     document.querySelectorAll(".answersShow").forEach((li, i) => {
       li.innerHTML = randomAnswers[i];

@@ -41,6 +41,7 @@ body{
 .startScreen span{ display: flex;}
 .startScreen h1{
     font-size: 6em;
+    text-wrap: nowrap;
     
 }
 .startScreen button{
@@ -166,6 +167,18 @@ display: flex;
 
 }
 @media only screen and (max-width: 767px) {
+    /* css for startpagina  */
+    .startScreen h1{
+        transform: scale(0.5);
+        width: fit-content;
+    }
+    .startScreen button{
+        transform: scale(0.7);
+    }
+    .material-symbols-outlined{
+        transform: scale(0.7);
+    }
+    /* Css for quiz itself */
     .nicolle-quizheader{
         transform: scale(0.7);
     }
