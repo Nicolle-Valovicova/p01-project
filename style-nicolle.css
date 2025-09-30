@@ -20,6 +20,43 @@ right ans color rgb(68, 255, 47)
 body{
     background-color: #08b2e3;
 }
+/* 'style for start screen */
+[hidden]{
+    display: none !important;
+}
+.startScreen{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: url(imgs/P1130313.jpg);
+        background-color: #08b2e3;
+    background-blend-mode: lighten;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.startScreen span{ display: flex;}
+.startScreen h1{
+    font-size: 6em;
+    
+}
+.startScreen button{
+    margin-top: 100px;
+    border: none;
+    padding: 10px 15px;
+    border-radius:10px ;
+    font-size: 2.5em;
+    background-color: #ffb100;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+.startScreen button:hover{
+    scale: 1.1;
+    background-color: #e6a102;
+}
 /* style for header */
 .nicolle-quizheader{
     display: flex;
@@ -43,8 +80,25 @@ body{
     background-color:#ffebc6 ;
     border-radius: 10px;
 }
-
-
+/* style for close btn */
+.material-symbols-outlined{
+    background-color: #ffb100;
+    padding: 10px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    border-radius: 25px;
+    scale: 1.2;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+.material-symbols-outlined:hover{
+    scale: 1.3;
+    background: #e6a102;
+}
+#closeQuiz img{
+ filter: invert(1);
+}
 /* style for questions */
 .questionsAppear{
     margin-top: 50px;
