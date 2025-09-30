@@ -81,7 +81,7 @@ body{
     background-color:#ffebc6 ;
     border-radius: 10px;
 }
-/* style for close btn */
+/* style for close btn and power up */
 .material-symbols-outlined{
     background-color: #ffb100;
     padding: 10px;
@@ -99,6 +99,21 @@ body{
 }
 #closeQuiz img{
  filter: invert(1);
+}
+#powerUp{
+     padding: 5px;
+    margin-top: 20px;
+    margin-left: 20px;
+    width:fit-content ;
+    background-color:#ffebc6 ;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+#powerUp:hover{
+        transform: scale(1.1);
+        background-color:#fffefc ;
+
 }
 /* style for questions */
 .questionsAppear{
@@ -163,7 +178,7 @@ display: flex;
 }
 .buttons h2:hover{
     transform: scale(1.1);
-        background-color: #fff3dd;
+        background-color:#fffefc;
 
 }
 @media only screen and (max-width: 767px) {

@@ -12,7 +12,10 @@
       rel="stylesheet"
     />
     <!-- icons -->
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=close" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=close"
+    />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_back"
@@ -20,13 +23,17 @@
     <title>Quiz</title>
   </head>
   <body>
+    <!-- start screen html -->
     <div id="startScreen" class="startScreen">
       <span id="goToHome" class="material-symbols-outlined"
         >arrow_back
-        <p>Terug</p></span>
+        <p>Terug</p></span
+      >
       <h1 class="startscreenItems">Automovive quiz</h1>
       <button id="startTheQuiz" class="startscreenItems">Start!</button>
     </div>
+
+    <!-- quiz screen html -->
     <div id="quiz" class="quiz" hidden>
       <header class="nicolle-quizheader">
         <h1 id="quizTitle">Automotive quiz</h1>
@@ -34,9 +41,14 @@
       </header>
       <main>
         <section class="extraBtns">
-<span id="closeQuiz" class="material-symbols-outlined">
-<img src="imgs/close_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png" alt="">
-</span>      </section>
+          <span id="closeQuiz" class="material-symbols-outlined">
+            <img
+              src="imgs/close_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png"
+              alt=""
+            />
+          </span>
+          <h2 id="powerUp">50/50</h2>
+        </section>
         <section class="questionsAppear">
           <div class="questions">
             <p id="questionShow"></p>
