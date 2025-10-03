@@ -12,209 +12,240 @@ right ans color rgb(68, 255, 47)
   font-weight: <weight>;
   font-style: normal;
 } */
-*{
-    margin: 0;
-    font-family: "Outfit", sans-serif;
+/* normal comment */
+/*  */
+/* ! */
+/* ? */
+/* //  */
+/* TODO */
 
+* {
+  margin: 0;
+  font-family: "Outfit", sans-serif;
 }
-body{
-    background-color: #08b2e3;
+body {
+  background-color: #08b2e3;
 }
 /* 'style for start screen */
-[hidden]{
-    display: none !important;
+[hidden] {
+  display: none !important;
 }
-.startScreen{
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-image: url(imgs/P1130313.jpg);
-        background-color: #08b2e3;
-    background-blend-mode: lighten;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+.startScreen {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-image: url(imgs/P1130313.jpg);
+  background-color: #08b2e3;
+  background-blend-mode: lighten;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-.startScreen span{ display: flex;}
-.startScreen h1{
-    font-size: 6em;
-    text-wrap: nowrap;
-    
+.startScreen span {
+  display: flex;
 }
-.startScreen button{
-    margin-top: 100px;
-    border: none;
-    padding: 10px 15px;
-    border-radius:10px ;
-    font-size: 2.5em;
-    background-color: #ffb100;
-    cursor: pointer;
-    transition: 0.3s ease;
+.startScreen h1 {
+  font-size: 6em;
+  text-wrap: nowrap;
 }
-.startScreen button:hover{
-    scale: 1.1;
-    background-color: #e6a102;
+.startScreen button {
+  margin-top: 100px;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 2.5em;
+  background-color: #ffb100;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+.startScreen button:hover {
+  scale: 1.1;
+  background-color: #e6a102;
 }
 /* style for header */
-.nicolle-quizheader{
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    
+.nicolle-quizheader {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
-.nicolle-quizheader h1{
-    padding: 15px;
-    width: fit-content;
-    background-color:#ffebc6 ;
-    border-radius: 10px;
+.nicolle-quizheader h1 {
+  padding: 15px;
+  width: fit-content;
+  background-color: #ffebc6;
+  border-radius: 10px;
 }
-.nicolle-quizheader h2{
-    padding: 5px;
-    margin-top: 20px;
-    width:fit-content ;
-    background-color:#ffebc6 ;
-    border-radius: 10px;
+.nicolle-quizheader h2 {
+  padding: 5px;
+  margin-top: 20px;
+  width: fit-content;
+  background-color: #ffebc6;
+  border-radius: 10px;
 }
 /* style for close btn and power up */
-.material-symbols-outlined{
-    background-color: #ffb100;
-    padding: 10px;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    border-radius: 25px;
-    scale: 1.2;
-    cursor: pointer;
-    transition: 0.3s ease;
+.material-symbols-outlined {
+  background-color: #ffb100;
+  padding: 10px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  border-radius: 25px;
+  scale: 1.2;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
-.material-symbols-outlined:hover{
-    scale: 1.3;
-    background: #e6a102;
+.material-symbols-outlined:hover {
+  scale: 1.3;
+  background: #e6a102;
 }
-#closeQuiz img{
- filter: invert(1);
+#closeQuiz img {
+  filter: invert(1);
 }
-#powerUp{
-     padding: 5px;
-    margin-top: 20px;
-    margin-left: 20px;
-    width:fit-content ;
-    background-color:#ffebc6 ;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.3s ease;
+#powerUp {
+  padding: 5px;
+  margin-top: 20px;
+  margin-left: 20px;
+  width: fit-content;
+  background-color: #ffebc6;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
-#powerUp:hover{
-        transform: scale(1.1);
-        background-color:#fffefc ;
-
+#powerUp:hover {
+  transform: scale(1.1);
+  background-color: #fffefc;
 }
 /* style for questions */
-.questionsAppear{
-    margin-top: 50px;
-   display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-
+.questionsAppear {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
-.questions{
-display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    align-items: center;        
-    background-color:#ffebc6 ;
-                width: 450px;
-    height: 250px;
-    border-radius: 15px;
-            font-size: 30px;
-
-
-
+.questions {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffebc6;
+  width: 450px;
+  height: 250px;
+  border-radius: 15px;
+  font-size: 30px;
 }
 
 /* style for answers */
-.answers ul{
-    list-style: none;
-    display: flex;
-    justify-content: center;
-     margin: 0;
+.answers ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin: 0;
   padding: 0;
 }
 
-.answers ul li{
-    background-color: #ffb100;
-    padding: 15px;
-    border-radius: 10px;
-    width: 300px;
-    margin: 25px;
-    transition: 0.3s ease;
+.answers ul li {
+  background-color: #ffb100;
+  padding: 15px;
+  border-radius: 10px;
+  width: 300px;
+  margin: 25px;
+  transition: 0.3s ease;
 }
-.answers ul li:hover{
-    transform: scale(1.05);
-        background-color: #e6a102;
-
+.answers ul li:hover {
+  transform: scale(1.05);
+  background-color: #ffc94c;
 }
 /* buttons css */
-.buttons{
-    display: flex;
-    justify-content: center;
+.buttons {
+  display: flex;
+  justify-content: center;
 }
-.buttons h2{
-    background-color: #ffebc6;
-    padding: 15px;
-    border-radius: 10px;
+.buttons h2 {
+  background-color: #ffebc6;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 20px;
+  position: relative;
+  transition: 0.3s ease;
+}
+.buttons h2:hover {
+  transform: scale(1.1);
+  background-color: #fffefc;
+}
+/* feedback screen css */
+.feedbackScreen {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.feedbackScreen h1 {
+  font-size: 6em;
+  text-wrap: nowrap;
+}
+.feedbackScreen h3 {
+  font-size: 2em;
+}
+.finalScore{
+    font-size: 3em;
     margin: 20px;
-    position: relative;
-    transition: 0.3s ease;
 }
-.buttons h2:hover{
-    transform: scale(1.1);
-        background-color:#fffefc;
-
+.rettryBtn img {
+  filter: invert(1);
 }
 @media only screen and (max-width: 767px) {
-    /* css for startpagina  */
-    .startScreen h1{
-        transform: scale(0.5);
-        width: fit-content;
-    }
-    .startScreen button{
-        transform: scale(0.7);
-    }
-    .material-symbols-outlined{
-        transform: scale(0.7);
-    }
-    /* Css for quiz itself */
-    .nicolle-quizheader{
-        transform: scale(0.7);
-    }
-    .questionsAppear{
-        transform: scale(0.7);
-        margin-top: 0;
-    }
-    .answers ul{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .answers ul li{
-        width: 265px;
-        margin: 10px;
-    }
-    .buttons h2{
-        transform: scale(0.8);
-    }
-    .questions p{
-        font-size: 30px;
-    }
-
+  /* css for startpagina  */
+  .startScreen h1 {
+    transform: scale(0.5);
+    width: fit-content;
+  }
+  .startScreen button {
+    transform: scale(0.7);
+  }
+  .material-symbols-outlined {
+    transform: scale(0.7);
+  }
+  /* Css for quiz itself */
+  .nicolle-quizheader {
+    transform: scale(0.7);
+  }
+  .questionsAppear {
+    transform: scale(0.7);
+    margin-top: 0;
+  }
+  .answers ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .answers ul li {
+    width: 265px;
+    margin: 10px;
+  }
+  .buttons h2 {
+    transform: scale(0.8);
+  }
+  .questions p {
+    font-size: 30px;
+  }
+  .feedbackScreen h1 {
+    font-size: 3em;
+  }
+  .feedbackScreen h3 {
+    font-size: 1.5em;
+  }
+  .finalScore{
+    font-size: 2em;
+    margin: 10px;
+  }
 }

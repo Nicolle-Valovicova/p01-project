@@ -20,6 +20,7 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_back"
     />
+    
     <title>Quiz</title>
   </head>
   <body>
@@ -37,7 +38,7 @@
     <div id="quiz" class="quiz" hidden>
       <header class="nicolle-quizheader">
         <h1 id="quizTitle">Automotive quiz</h1>
-        <h2 id="score">score</h2>
+        <h2 id="score">score: 0/20</h2>
       </header>
       <main>
         <section class="extraBtns">
@@ -64,11 +65,32 @@
             <li class="answersShow" id="ans4"><span>D.</span></li>
           </ul>
           <div class="buttons">
-            <h2 id="backbtn">Terug</h2>
-            <h2 id="nextBtn">Verder</h2>
+            <h2 id="backbtn">Back</h2>
+            <h2 id="nextBtn">Next</h2>
           </div>
         </section>
       </main>
+    </div>
+    </div>
+    <!-- feedback screen html (winning) -->
+    <div id="win" class="feedbackScreen" >
+      <h1>Congratulations!</h1>
+      <h3>You now earn a cool car sticker</h3>
+      <p class="finalScore">score</p>
+      <div class="buttons">
+       <h2 class="rettryBtn">Retry <img src="imgs/replay_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png" alt=""></h2>
+      <h2 class="homeBtn">Home</h2>
+      </div>
+    </div>
+    <!-- feedback screen html (lose) -->
+    <div id="lose" class="feedbackScreen"  >
+      <h1>Good effort!</h1>
+      <h3>Better luck next time</h3>
+      <p class="finalScore">score</p>
+      <div class="buttons">
+       <h2 class="rettryBtn">Retry <img src="imgs/replay_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png" alt=""></h2>
+    <h2 class="homeBtn">Home</h2>
+      </div>
     </div>
     <script src="script-nicolle.js"></script>
   </body>

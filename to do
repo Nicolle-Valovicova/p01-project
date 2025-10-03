@@ -1,4 +1,4 @@
-1.  Maak een scrumboard en vul deze per sprint aan met taken en voortgang.
+<!-- 1.  Maak een scrumboard en vul deze per sprint aan met taken en voortgang.
 
 2. Houd een scrumlogboek bij (dagelijkse/wekelijkse updates).
 
@@ -18,32 +18,32 @@
 
 10. Bouw de quiz in HTML (structuur: headings, secties, tabellen, formulieren).
 
-11. Voeg CSS styling toe (flexbox, grid, thema’s per categorie, kleuren, box-model).
+11. Voeg CSS styling toe (flexbox, grid, thema’s per categorie, kleuren, box-model). -->
 
  
 Programmeer in JavaScript:
 
-12. Vragen en antwoorden tonen (meerkeuze).
+<!-- 12. Vragen en antwoorden tonen (meerkeuze). -->
 
 13. Naam invoeren en tonen tijdens de quiz.
 
-14. Score bijhouden (+ voor goed, – voor fout).
+<!-- 14. Score bijhouden (+ voor goed, – voor fout). -->
 
-15. 50/50 power-up toevoegen.
+<!-- 15. 50/50 power-up toevoegen. -->
 
-16. Willekeurige volgorde van vragen.
+<!-- 16. Willekeurige volgorde van vragen. -->
 
 17. Eindscherm met statistieken (goed/fout, totaal).
 
-18. Eindscherm bij teveel fouten.
+<!-- 18. Eindscherm bij teveel fouten. -->
 
-19. Minstens 20 vragen en 4 categorieën.
+<!-- 19. Minstens 20 vragen en 4 categorieën. -->
 
 20. Mogelijkheid om categorie te kiezen.
 
 21. Ander thema per categorie.
 
-22. Feedback geven per antwoord (goed/fout).
+<!-- 22. Feedback geven per antwoord (goed/fout). -->
 
 23. Mogelijkheid om quiz opnieuw te starten.
 
