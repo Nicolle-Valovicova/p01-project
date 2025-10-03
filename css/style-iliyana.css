@@ -1,0 +1,17 @@
+#startpage {
+    background-image: url(https://images8.alphacoders.com/118/thumb-1920-1185380.jpg);
+    background-size: cover;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+    color: white;
+}   
+
+.container h1 {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+
