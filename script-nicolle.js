@@ -121,13 +121,14 @@ fetch(ourQuestions)
     // code for showing feedbackscreen
 
     function toggleFeedback() {
-      console.log("final score:", score);
       if (score >= 10) {
         winFeedbackScreen.style.display = "flex";
         loseFeedbackScreen.style.display = "none";
+        drawScore();
       } else {
         winFeedbackScreen.style.display = "none";
         loseFeedbackScreen.style.display = "flex";
+        drawScore();
       }
     }
   });
