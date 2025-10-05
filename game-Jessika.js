@@ -1,83 +1,32 @@
-const question = document.querySelector('#question');
+// Game elements
+const questionElement = document.querySelector('#question');
 const choices = Array.from(document.querySelectorAll('.choice-text'));
 const progressText = document.querySelector('#progressText');
 const scoreText = document.querySelector('#score');
 const progressBarFull = document.querySelector('#progressBarFull');
 const nextBtn = document.getElementById("nextBtn");
 const prevBtn = document.getElementById("prevBtn");
+const fiftyFiftyBtn = document.getElementById("fiftyFiftyBtn");
 
+// Game state
 let currentQuestion = {};
-let acceptingAnswers = false;
+let acceptingAnswers = true;
 let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
 let currentIndex = 0;
+let correctAnswersCount = 0;
 
+// Constants
 const SCORE_POINTS = 100;
-const MAX_QUESTIONS = 20;
+const MAX_QUESTIONS = 20; 
 
-
-const shuffle = (array) => {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-};
-
-
-fetch('questions.json')
-  .then((res) => res.json())
-  .then((data) => {
-    console.log(data.jessica);
-    
- 
-    const transformedQuestions = data.jessica.map((q, index) => ({
-      question: q.question,
-      Choice1: q.options[0],
-      Choice2: q.options[1],
-      Choice3: q.options[2],
-      Choice4: q.options[3],
-      answer: q.answer
-    }));
-
-    questions = transformedQuestions;
-    startGame();
-
-    
-    nextBtn.addEventListener("click", function () {
-      if (currentIndex < questions.length - 1) {
-        currentIndex++;
-        showQuestion(currentIndex);
-        showOptions(currentIndex);
-        updateProgress();
-      } else {
-        console.log("quiz klaar");
-        endGame();
-      }
-    });
-
-    prevBtn.addEventListener("click", function () {
-      if (currentIndex > 0) {
-        currentIndex--;
-        showQuestion(currentIndex);
-        showOptions(currentIndex);
-        updateProgress();
-      } else {
-        console.log("eerste vraag bereikt");
-      }
-    });
-
-  })
-  .catch(error => {
-    console.error('Error loading questions:', error);
-    
-    questions = [
-    
+// Questions data
+let questions = [
           {
         question: 'Which Cookie is the first playable character you receive at the start of the game?',
-        Choice1: 'GingerBread',
-        Choice2: 'Stardust',
+        Choice1: 'Stardust',
+        Choice2: 'GingerBread',
         Choice3: 'Kiwi',
         Choice4: 'Donut',
         answer: 2,
@@ -128,7 +77,7 @@ fetch('questions.json')
         Choice2: 'Tencent Games (China)',
         Choice3: 'Mizaki',
         Choice4: 'Climana',
-        answer: 1,
+        answer: 2,
     },
     {
         question: 'How many cookie types are there?',
@@ -155,7 +104,7 @@ fetch('questions.json')
         answer: 4,
     },
     {
-        question: 'What would be the name of this cookie? (picture of Shadow milk cookie)',
+        question: 'What is the name of the cookie that is the opposite of Pure Vanilla Cookie',
         Choice1: 'Deceit',
         Choice2: 'Blue Jester',
         Choice3: 'Shadow milk cookie',
@@ -195,7 +144,7 @@ fetch('questions.json')
         answer: 2,
     },
     {
-        question: 'Aside from pulling them from the Gacha, what is the primary way to obtain a Cookie\'s Soulstones to unlock them?',
+        question: 'Aside from pulling them from the Gacha, what is the primary way to obtain a Cookies Soulstones to unlock them?',
         Choice1: 'Chests',
         Choice2: 'Rewards',
         Choice3: 'The Mileage Shop',
@@ -203,7 +152,7 @@ fetch('questions.json')
         answer: 3,
     },
     {
-        question: 'Which game mode allows you to set defensive teams and battle other players\' teams for rewards?',
+        question: 'Which game mode allows you to set defensive teams and battle other players teams for rewards?',
         Choice1: 'Kingdom Arena',
         Choice2: 'Battle mode',
         Choice3: 'Guild battles',
@@ -235,97 +184,229 @@ fetch('questions.json')
         answer: 3,
     }
 
-    ];
-    startGame();
-  });
 
-const startGame = () => {
-  questionCounter = 0;
-  score = 0;
-  currentIndex = 0;
-  availableQuestions = [...questions];
-  getNewQuestion();
-};
+];
 
-const getNewQuestion = () => {
-  if (availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
-    endGame();
-    return;
-  }
-  
-  questionCounter++;
-  updateProgress();
-
-  const questionsIndex = Math.floor(Math.random() * availableQuestions.length);
-  currentQuestion = availableQuestions[questionsIndex];
-  currentIndex = questions.findIndex(q => q === currentQuestion);
-  
-  showQuestion(currentIndex);
-  showOptions(currentIndex);
-  
-  availableQuestions.splice(questionsIndex, 1);
-  acceptingAnswers = true;
-};
-
-const showQuestion = (index) => {
-  question.innerText = questions[index].question;
-};
-
-const showOptions = (index) => {
-  const opts = [
-    questions[index].Choice1,
-    questions[index].Choice2, 
-    questions[index].Choice3,
-    questions[index].Choice4
-  ];
-  const shuffled = shuffle([...opts]);
-  
-  choices.forEach((choice, i) => {
-    choice.innerText = shuffled[i];
+// Initialize the game
+function initGame() {
+    console.log("Initializing game...");
     
-    choice.dataset.value = shuffled[i];
-  });
-};
+    // Add event listeners
+    nextBtn.addEventListener("click", goToNextQuestion);
+    prevBtn.addEventListener("click", goToPreviousQuestion);
+    fiftyFiftyBtn.addEventListener("click", useFiftyFifty);
+    
+    // Add click listeners to choices
+    choices.forEach(choice => {
+        choice.addEventListener('click', handleChoiceClick);
+    });
+    
+    // Start the game
+    startGame();
+}
 
-const updateProgress = () => {
-  progressText.innerText = `Question ${questionCounter} of ${MAX_QUESTIONS}`;
-  progressBarFull.style.width = `${(questionCounter / MAX_QUESTIONS) * 100}%`;
-  scoreText.innerText = score;
-};
+// Start the game
+function startGame() {
+    console.log("Starting game...");
+    questionCounter = 0;
+    score = 0;
+    correctAnswersCount = 0;
+    currentIndex = 0;
+    availableQuestions = [...questions];
+    
+    updateScore();
+    getNewQuestion();
+}
 
+// Get a new question
+function getNewQuestion() {
+    if (availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
+        endGame();
+        return;
+    }
+    
+    questionCounter++;
+    updateProgress();
 
-choices.forEach(choice => {
-  choice.addEventListener('click', e => {
+    // Get random question
+    const randomIndex = Math.floor(Math.random() * availableQuestions.length);
+    currentQuestion = availableQuestions[randomIndex];
+    currentIndex = questions.findIndex(q => q === currentQuestion);
+    
+    // Remove the question from available questions
+    availableQuestions.splice(randomIndex, 1);
+    
+    // Display the question and options
+    showQuestion(currentIndex);
+    showOptions(currentIndex);
+    
+    acceptingAnswers = true;
+    resetFiftyFifty();
+    
+    console.log("Displaying question:", currentQuestion.question);
+}
+
+// Show question
+function showQuestion(index) {
+    questionElement.innerText = questions[index].question;
+}
+
+// Show options
+function showOptions(index) {
+    const question = questions[index];
+    const optionTexts = [
+        question.Choice1,
+        question.Choice2,
+        question.Choice3,
+        question.Choice4
+    ];
+    
+    choices.forEach((choice, i) => {
+        choice.innerText = optionTexts[i];
+        choice.dataset.number = (i + 1).toString();
+    });
+}
+
+// Handle choice click
+function handleChoiceClick(e) {
     if (!acceptingAnswers) return;
-
+    
     acceptingAnswers = false;
     const selectedChoice = e.target;
-    const selectedAnswer = selectedChoice.dataset.value;
+    const selectedAnswer = parseInt(selectedChoice.dataset.number);
     
-   
-    const correctAnswerText = currentQuestion['Choice' + currentQuestion.answer];
+    const classToApply = selectedAnswer === currentQuestion.answer ? 'correct' : 'incorrect';
     
-    let classToApply = selectedAnswer === correctAnswerText ? 'correct' : 'incorrect';
-
     if (classToApply === 'correct') {
-      incrementScore(SCORE_POINTS);
+        incrementScore(SCORE_POINTS);
+        correctAnswersCount++;
     }
     
     selectedChoice.parentElement.classList.add(classToApply);
     
     setTimeout(() => {
-      selectedChoice.parentElement.classList.remove(classToApply);
-      getNewQuestion();
+        selectedChoice.parentElement.classList.remove(classToApply);
+        getNewQuestion();
     }, 1000);
-  });
-});
+}
 
-const incrementScore = num => {
-  score += num;
-  scoreText.innerText = score;
-};
+// 50/50 Power-up
+function useFiftyFifty() {
+    if (!acceptingAnswers) return;
+    
+    console.log("Using 50/50 power-up!");
+    
+    const correctAnswerNumber = currentQuestion.answer;
+    const correctChoice = document.querySelector(`.choice-text[data-number="${correctAnswerNumber}"]`);
+    
+    // Get all incorrect choices
+    const incorrectChoices = choices.filter(choice => {
+        return parseInt(choice.dataset.number) !== correctAnswerNumber;
+    });
+    
+    // Shuffle and select two incorrect choices to hide
+    const shuffledIncorrect = [...incorrectChoices].sort(() => Math.random() - 0.5);
+    const choicesToHide = shuffledIncorrect.slice(0, 2);
+    
+    // Hide the selected incorrect choices
+    choicesToHide.forEach(choice => {
+        choice.parentElement.classList.add('hidden');
+    });
+    
+    // Disable the power-up
+    fiftyFiftyBtn.disabled = true;
+    fiftyFiftyBtn.style.opacity = '0.5';
+    
+    console.log("50/50 completed. Correct answer is option", correctAnswerNumber);
+}
 
-const endGame = () => {
-  localStorage.setItem('mostRecentScore', score);
-  window.location.assign('/end-Jessika.html');
-};
+// Reset 50/50 for new question
+function resetFiftyFifty() {
+    // Show all choices
+    choices.forEach(choice => {
+        choice.parentElement.classList.remove('hidden');
+    });
+    
+    // Enable the power-up
+    fiftyFiftyBtn.disabled = false;
+    fiftyFiftyBtn.style.opacity = '1';
+}
+
+// Navigation functions
+function goToNextQuestion() {
+    if (currentIndex < questions.length - 1 && questionCounter < MAX_QUESTIONS) {
+        currentIndex++;
+        questionCounter++;
+        showQuestion(currentIndex);
+        showOptions(currentIndex);
+        updateProgress();
+        acceptingAnswers = true;
+        resetFiftyFifty();
+    } else {
+        console.log("End of quiz reached");
+        endGame();
+    }
+}
+
+function goToPreviousQuestion() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        questionCounter--;
+        showQuestion(currentIndex);
+        showOptions(currentIndex);
+        updateProgress();
+        acceptingAnswers = true;
+        resetFiftyFifty();
+    } else {
+        console.log("Already at first question");
+    }
+}
+
+// Update progress
+function updateProgress() {
+    progressText.innerText = `Question ${questionCounter} of ${MAX_QUESTIONS}`;
+    progressBarFull.style.width = `${(questionCounter / MAX_QUESTIONS) * 100}%`;
+}
+
+// Update score
+function updateScore() {
+    scoreText.innerText = score;
+}
+
+// Increment score
+function incrementScore(points) {
+    score += points;
+    updateScore();
+}
+
+// End game
+function endGame() {
+    if (answeredQuestions.size < MAX_QUESTIONS) {
+        showCompletionWarning();
+        return;
+    }
+    
+    console.log("Game ended! Final score:", score);
+    console.log("Correct answers:", correctAnswersCount);
+    console.log("Total questions:", MAX_QUESTIONS);
+    
+    // Save data to localStorage
+    localStorage.setItem('mostRecentScore', score);
+    localStorage.setItem('correctAnswers', correctAnswersCount);
+    localStorage.setItem('totalQuestions', MAX_QUESTIONS);
+    
+    // Add timestamp to ensure fresh data
+    localStorage.setItem('quizCompleted', new Date().getTime());
+    
+    console.log("Data saved to localStorage:", {
+        score: score,
+        correct: correctAnswersCount,
+        total: MAX_QUESTIONS
+    });
+    
+    // Redirect to end page
+    window.location.href = 'end-Jessika.html';
+}
+
+// Start the game when the page loads
+document.addEventListener('DOMContentLoaded', initGame);
