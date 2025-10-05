@@ -6,10 +6,10 @@ let powerUp = document.getElementById("powerUp");
 let scoreShow = document.getElementById("score");
 let winFeedbackScreen = document.getElementById("win");
 let loseFeedbackScreen = document.getElementById("lose");
-let finalScore = document.querySelector(".finalScore");
-let retryBtn = document.querySelector(".rettryBtn");
-let homeBtn = document.querySelector(".homeBtn");
-let score = 0;
+let finalScore = document.querySelectorAll(".finalScore");
+let retryBtn = document.querySelectorAll(".rettryBtn");
+let homeBtn = document.querySelectorAll(".homeBtn");
+let score = 10;
 let ourQuestions = "questions.json";
 // shuffle function for ramdom ex. answers
 const shuffle = (array) => {
@@ -21,6 +21,22 @@ const shuffle = (array) => {
   }
   return array;
 };
+// script for cool sticker aniamtion
+
+const carSticker = document.getElementById("carSticker");
+const carStickerAnimation = [
+  {filter: "blur(9px)",   width: "700px", display: "none"},
+  {filter: "blur(0px)", width: "400px",  display: "block"}
+];
+const stickerTiming = {
+  duration: 1000,
+  iterations: 1,
+  easing: "ease-out",
+  fill: "forwards"
+};
+function stickerAnimate(){
+  carSticker.animate(carStickerAnimation, stickerTiming);
+}
 // the loaded in questions
 fetch(ourQuestions)
   .then((res) => res.json())
@@ -40,6 +56,11 @@ fetch(ourQuestions)
         allVisible();
       } else {
         endQuiz();
+            finalScoredraw();
+
+        setTimeout(() => {
+          stickerAnimate()
+        }, 1000);
       }
     });
 
@@ -110,8 +131,12 @@ fetch(ourQuestions)
     function drawScore() {
       score++;
       scoreShow.innerText = "Score: " + score + "/20";
-      finalScore.innerText = "Final score: " + score + "/20";
-      console.log(finalScore.innerText);
+    }
+    function finalScoredraw(){
+       finalScore.forEach(el =>{
+      el.innerText = "Final score: " + score + "/20";
+      });
+      console.log(finalScore);
     }
     function endQuiz() {
       quiz.hidden = true;
@@ -124,11 +149,9 @@ fetch(ourQuestions)
       if (score >= 10) {
         winFeedbackScreen.style.display = "flex";
         loseFeedbackScreen.style.display = "none";
-        drawScore();
       } else {
         winFeedbackScreen.style.display = "none";
         loseFeedbackScreen.style.display = "flex";
-        drawScore();
       }
     }
   });
@@ -140,10 +163,13 @@ let closeQuiz = document.getElementById("closeQuiz");
 
 let quiz = document.getElementById("quiz");
 let startScreen = document.getElementById("startScreen");
-// ! change to true when you want to hide the quiz at the start
+// ! change to false when you want to hide the quiz at the start
 
 startScreen.hidden = true;
+// ! change to true when you want to hide the quiz at the start
+
 quiz.hidden = true;
+
 startTheQuiz.addEventListener("click", () => {
   startScreen.hidden = true;
   quiz.hidden = false;
@@ -156,13 +182,19 @@ backToHomePage.addEventListener("click", () => {
   startScreen.hidden = true;
   // TODO: HERE COMES THE HOME PAGE.hidden = true;
 });
-retryBtn.addEventListener("click", () => {
+retryBtn.forEach(btn => {
+btn.addEventListener("click", () => {
   quiz.hidden = false;
   winFeedbackScreen.style.display = "none";
   loseFeedbackScreen.style.display = "none";
 });
-homeBtn.addEventListener("click", () => {
+});
+homeBtn.forEach(btn => {
+btn.addEventListener("click", () => {
   // TODO: HERE COMES THE HOME PAGE .hidden = false;
   winFeedbackScreen.style.display = "none";
   loseFeedbackScreen.style.display = "none";
 });
+});
+
+// 

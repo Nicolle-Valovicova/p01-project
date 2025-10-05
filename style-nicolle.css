@@ -183,22 +183,37 @@ body {
 /* feedback screen css */
 .feedbackScreen {
   text-align: center;
+  /* !change back to none */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
 }
+#carSticker{
+  position: absolute;
+  rotate: 25deg;
+display: none;  width: 400px;
+  right: 0;
+  transform: translateY(150px);
+}
 .feedbackScreen h1 {
+  color: #ffb100;
+  text-shadow:2px 2px #e6a102;
   font-size: 6em;
   text-wrap: nowrap;
 }
 .feedbackScreen h3 {
+    color: #000000;
   font-size: 2em;
 }
 .finalScore{
+  color: #ffebc6;
     font-size: 3em;
     margin: 20px;
+}
+.buttons{
+  cursor: pointer;
 }
 .rettryBtn img {
   filter: invert(1);
@@ -237,6 +252,11 @@ body {
   }
   .questions p {
     font-size: 30px;
+  }
+  #carSticker{
+    width: 330px;
+    top: 0;
+  transform: translateY(90px);
   }
   .feedbackScreen h1 {
     font-size: 3em;
