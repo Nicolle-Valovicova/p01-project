@@ -119,8 +119,34 @@ btn.onclick = () => checkAnswer (i, btn);
 })
 }
 
+function checkAnswer(i, btn) {
+  let q = questions[currentQuestion];
 
+  if (i === q.correct) {
+    btn.classList.add("correct");
+    score++;
+  } else {
+    btn.classList.add("wrong");
+  }
+   
+  let buttons = document.querySelectorAll(".answer-btn");
+  buttons.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.correct) {
+      btn.classList.add("correct");
+    }
+  });
+}
+const nextBtn = document.querySelector(".next-question-btn");
+const questionStatus = document.querySelector(".question-status b");
+
+nextBtn.addEventListener("click", () => {
+  currentQuestion++;            
+  if(currentQuestion < questions.length) {
+    showQuestion();             
+    questionStatus.textContent = currentQuestion + 1; 
+  } 
+  });
 
 showQuestion();
-
 
