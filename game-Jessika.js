@@ -1,4 +1,3 @@
-// Game elements
 const questionElement = document.querySelector('#question');
 const choices = Array.from(document.querySelectorAll('.choice-text'));
 const progressText = document.querySelector('#progressText');
@@ -8,7 +7,7 @@ const nextBtn = document.getElementById("nextBtn");
 const prevBtn = document.getElementById("prevBtn");
 const fiftyFiftyBtn = document.getElementById("fiftyFiftyBtn");
 
-// Game state
+
 let currentQuestion = {};
 let acceptingAnswers = true;
 let score = 0;
@@ -18,11 +17,11 @@ let currentIndex = 0;
 let correctAnswersCount = 0;
 let answeredQuestions = new Set();
 
-// Constants
+
 const SCORE_POINTS = 100;
 const MAX_QUESTIONS = 20; 
 
-// Questions data
+
 let questions = [
   {
     question: 'Which Cookie is the first playable character you receive at the start of the game?',
