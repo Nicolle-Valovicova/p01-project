@@ -18,7 +18,9 @@ right ans color rgb(68, 255, 47)
 /* ? */
 /* //  */
 /* TODO */
-
+:root{
+  --box-shadow-color: #90875e;
+}
 * {
   margin: 0;
   font-family: "Outfit", sans-serif;
@@ -29,6 +31,13 @@ body {
 /* 'style for start screen */
 [hidden] {
   display: none !important;
+}
+ [blurActive]{
+  filter: blur(4px) !important;
+}
+[notClickable]{
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
 }
 .startScreen {
   text-align: center;
@@ -63,7 +72,49 @@ body {
 }
 .startScreen button:hover {
   scale: 1.1;
-  background-color: #e6a102;
+  background-color: #ffc94c;
+}
+/* style for pop up  */
+.pop-upAlert{
+  position: absolute;
+  background-color: #ffebc6;
+  height: 250px;
+  width: 400px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.5);
+  border-radius: 15px;
+ -webkit-box-shadow: 0 0 5px 2px var(--box-shadow-color);
+    -moz-box-shadow: 0 0 5px 2px var(--box-shadow-color);
+    box-shadow: 0 0 5px 2px var(--box-shadow-color);
+  }
+.pop-upContain{
+  padding: 20px;
+}
+.pop-upContain p{
+  padding-top: 10px;
+}
+#cancel{
+ background-color: #ffb100;
+  padding: 15px;
+  border-radius: 10px;
+  border: 0px;
+  margin:20px 20px 0;
+  left: 32%;
+  position: relative;
+  width: fit-content;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+#cancel:hover{
+   scale: 1.2;
+  background: #ffc94c;
 }
 /* style for header */
 .nicolle-quizheader {
@@ -151,15 +202,16 @@ body {
   padding: 0;
 }
 
-.answers ul li {
+.answersShow {
   background-color: #ffb100;
   padding: 15px;
   border-radius: 10px;
   width: 300px;
+  cursor: pointer;
   margin: 25px;
   transition: 0.3s ease;
 }
-.answers ul li:hover {
+.answersShow:hover {
   transform: scale(1.05);
   background-color: #ffc94c;
 }
@@ -176,6 +228,7 @@ body {
   position: relative;
   transition: 0.3s ease;
 }
+
 .buttons h2:hover {
   transform: scale(1.1);
   background-color: #fffefc;
@@ -184,7 +237,7 @@ body {
 .feedbackScreen {
   text-align: center;
   /* !change back to none */
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -218,6 +271,7 @@ display: none;  width: 400px;
 .rettryBtn img {
   filter: invert(1);
 }
+/* ! STYLE THE POP UP FOR SMALLER SCREENS */
 @media only screen and (max-width: 767px) {
   /* css for startpagina  */
   .startScreen h1 {
@@ -267,5 +321,9 @@ display: none;  width: 400px;
   .finalScore{
     font-size: 2em;
     margin: 10px;
+  }
+  .pop-upAlert{
+      transform: translate(-50%, -50%) scale(0.9);
+
   }
 }

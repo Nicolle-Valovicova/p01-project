@@ -35,7 +35,16 @@
     </div>
 
     <!-- quiz screen html -->
-    <div id="quiz" class="quiz" hidden>
+     <div class="pop-upAlert" id="popUp" hidden>
+      <div class="pop-upContain">
+        <h3>Welcome to the quiz!</h3>
+        <p>Answer 20 questions and try to score 10 or more points to win.
+        Use the 50/50 power-up to remove two wrong answers.
+        Ready? Let’s begin!</p>
+        <h2 id="cancel">Play!</h2>
+      </div>
+     </div>
+    <div id="quiz" class="quiz" hidden blurActive>
       <header class="nicolle-quizheader">
         <h1 id="quizTitle">Automotive quiz</h1>
         <h2 id="score">score: 0/20</h2>
@@ -49,6 +58,7 @@
             />
           </span>
           <h2 id="powerUp">50/50</h2>
+          <!-- !<h2 id="shuffleQuestions">Shuffle</h2> -->
         </section>
         <section class="questionsAppear">
           <div class="questions">
@@ -57,16 +67,16 @@
         </section>
         <section class="answers">
           <ul class="answerColumn1">
-            <li class="answersShow" id="ans1"><span>A.</span></li>
-            <li class="answersShow" id="ans2"><span>B.</span></li>
+            <li class="answersShow" id="ans1"></li>
+            <li class="answersShow" id="ans2"></li>
           </ul>
           <ul class="answerColumn2">
-            <li class="answersShow" id="ans3"><span>C.</span></li>
-            <li class="answersShow" id="ans4"><span>D.</span></li>
+            <li class="answersShow" id="ans3"></li>
+            <li class="answersShow" id="ans4"></li>
           </ul>
           <div class="buttons">
             <h2 id="backbtn">Back</h2>
-            <h2 id="nextBtn">Next</h2>
+            <h2 id="nextBtn" notClickable>Next</h2>
           </div>
         </section>
       </main>

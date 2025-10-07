@@ -9,7 +9,15 @@ let loseFeedbackScreen = document.getElementById("lose");
 let finalScore = document.querySelectorAll(".finalScore");
 let retryBtn = document.querySelectorAll(".rettryBtn");
 let homeBtn = document.querySelectorAll(".homeBtn");
-let score = 10;
+let backToHomePage = document.getElementById("goToHome");
+let startTheQuiz = document.getElementById("startTheQuiz");
+let closeQuiz = document.getElementById("closeQuiz");
+let cancelBtn = document.getElementById("cancel");
+let quiz = document.getElementById("quiz");
+let startScreen = document.getElementById("startScreen");
+const popUp = document.getElementById("popUp");
+let score = 0;
+let answered = false;
 let ourQuestions = "questions.json";
 // shuffle function for ramdom ex. answers
 const shuffle = (array) => {
@@ -21,20 +29,28 @@ const shuffle = (array) => {
   }
   return array;
 };
+// script for pop up when quiz
+startTheQuiz.addEventListener("click", () => {
+  popUp.hidden = false;
+});
+cancelBtn.addEventListener("click", () => {
+  popUp.hidden = true;
+  quiz.removeAttribute("blurActive");
+});
 // script for cool sticker aniamtion
 
 const carSticker = document.getElementById("carSticker");
 const carStickerAnimation = [
-  {filter: "blur(9px)",   width: "700px", display: "none"},
-  {filter: "blur(0px)", width: "400px",  display: "block"}
+  { filter: "blur(9px)", width: "700px", display: "none" },
+  { filter: "blur(0px)", width: "400px", display: "block" },
 ];
 const stickerTiming = {
   duration: 1000,
   iterations: 1,
   easing: "ease-out",
-  fill: "forwards"
+  fill: "forwards",
 };
-function stickerAnimate(){
+function stickerAnimate() {
   carSticker.animate(carStickerAnimation, stickerTiming);
 }
 // the loaded in questions
@@ -48,18 +64,24 @@ fetch(ourQuestions)
     showQuestion(currentIndex); //display the different questions by using the next button
     showOptions(currentIndex);
     nextBtn.addEventListener("click", function () {
+      if (!answered) {
+        nextBtn.setAttribute("notClickable", "");
+
+        return;
+      }
       currentIndex++;
       if (currentIndex < data.nicolle.length) {
         showQuestion(currentIndex);
         showOptions(currentIndex);
+
         resetBgColor();
         allVisible();
       } else {
         endQuiz();
-            finalScoredraw();
+        finalScoredraw();
 
         setTimeout(() => {
-          stickerAnimate()
+          stickerAnimate();
         }, 1000);
       }
     });
@@ -70,7 +92,6 @@ fetch(ourQuestions)
 
         showQuestion(currentIndex);
         showOptions(currentIndex);
-        resetBgColor();
         allVisible();
       } else {
         console.log("nothing works");
@@ -78,6 +99,8 @@ fetch(ourQuestions)
     });
     function showQuestion(currentIndex) {
       questionShow.innerHTML = data.nicolle[currentIndex].question;
+      answered = false;
+      nextBtn.setAttribute("notClickable", "");
     } //display the questions in your html
     function showOptions(currentIndex) {
       const opts = data.nicolle[currentIndex].options;
@@ -94,11 +117,26 @@ fetch(ourQuestions)
     //function for changing the bg color on right/ wrong answer
     answersShow.forEach((btn) => {
       btn.addEventListener("click", () => {
+        if (answered) return;
+        const correct = data.nicolle[currentIndex].answer.trim();
+        const choice = btn.textContent.trim();
+
+        if (choice === correct) {
+          drawScore();
+        }
+        answered = true;
+        nextBtn.removeAttribute("notClickable");
+// if statement for showing wrong / right answer
         if (btn.innerText === data.nicolle[currentIndex].answer) {
           btn.style.backgroundColor = "#72bf6a";
-          drawScore();
         } else {
           btn.style.backgroundColor = "#f94449";
+          answersShow.forEach(option =>{
+            if(option.innerText === data.nicolle[currentIndex].answer){
+              option.style.backgroundColor = "#72bf6a";
+
+            }
+          });
         }
       });
     });
@@ -132,9 +170,9 @@ fetch(ourQuestions)
       score++;
       scoreShow.innerText = "Score: " + score + "/20";
     }
-    function finalScoredraw(){
-       finalScore.forEach(el =>{
-      el.innerText = "Final score: " + score + "/20";
+    function finalScoredraw() {
+      finalScore.forEach((el) => {
+        el.innerText = "Final score: " + score + "/20";
       });
       console.log(finalScore);
     }
@@ -157,15 +195,10 @@ fetch(ourQuestions)
   });
 
 // js for switching betwheen pages
-let backToHomePage = document.getElementById("goToHome");
-let startTheQuiz = document.getElementById("startTheQuiz");
-let closeQuiz = document.getElementById("closeQuiz");
 
-let quiz = document.getElementById("quiz");
-let startScreen = document.getElementById("startScreen");
 // ! change to false when you want to hide the quiz at the start
 
-startScreen.hidden = true;
+startScreen.hidden = false;
 // ! change to true when you want to hide the quiz at the start
 
 quiz.hidden = true;
@@ -173,28 +206,30 @@ quiz.hidden = true;
 startTheQuiz.addEventListener("click", () => {
   startScreen.hidden = true;
   quiz.hidden = false;
+  quiz.setAttribute("blurActive", "");
 });
 closeQuiz.addEventListener("click", () => {
   startScreen.hidden = false;
   quiz.hidden = true;
+  popUp.hidden = true;
 });
 backToHomePage.addEventListener("click", () => {
   startScreen.hidden = true;
   // TODO: HERE COMES THE HOME PAGE.hidden = true;
 });
-retryBtn.forEach(btn => {
-btn.addEventListener("click", () => {
-  quiz.hidden = false;
-  winFeedbackScreen.style.display = "none";
-  loseFeedbackScreen.style.display = "none";
+retryBtn.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    quiz.hidden = false;
+    winFeedbackScreen.style.display = "none";
+    loseFeedbackScreen.style.display = "none";
+  });
 });
-});
-homeBtn.forEach(btn => {
-btn.addEventListener("click", () => {
-  // TODO: HERE COMES THE HOME PAGE .hidden = false;
-  winFeedbackScreen.style.display = "none";
-  loseFeedbackScreen.style.display = "none";
-});
+homeBtn.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    // TODO: HERE COMES THE HOME PAGE .hidden = false;
+    winFeedbackScreen.style.display = "none";
+    loseFeedbackScreen.style.display = "none";
+  });
 });
 
-// 
+//
