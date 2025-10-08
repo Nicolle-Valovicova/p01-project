@@ -103,8 +103,10 @@ let questions = [
 ]
 
 
-let currentQuestion = 0;
-let score = 0;
+let currentQuestion = 0; // bijhouden welke vraag je nu hebt.
+let score = 0; // score bijhouden
+let fiftyUses = 0; // telt hoeveel keer je hem hebt gebruikt
+const maxFiftyUses = 5; // maximaal aantal keer
 
 function showQuestion() {
   let q = questions[currentQuestion];
@@ -122,9 +124,11 @@ btn.onclick = () => checkAnswer (i, btn);
 function checkAnswer(i, btn) {
   let q = questions[currentQuestion];
 
+
   if (i === q.correct) {
     btn.classList.add("correct");
     score++;
+    scoreDisplay.textContent = score; 
   } else {
     btn.classList.add("wrong");
   }
@@ -137,8 +141,11 @@ function checkAnswer(i, btn) {
     }
   });
 }
+
 const nextBtn = document.querySelector(".next-question-btn");
 const questionStatus = document.querySelector(".question-status b");
+const scoreDisplay = document.querySelector(".score b");
+
 
 nextBtn.addEventListener("click", () => {
   currentQuestion++;            
@@ -147,6 +154,7 @@ nextBtn.addEventListener("click", () => {
     questionStatus.textContent = currentQuestion + 1; 
   } 
   });
+
 
 showQuestion();
 
