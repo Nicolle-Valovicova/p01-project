@@ -18,6 +18,8 @@ let startScreen = document.getElementById("startScreen");
 const popUp = document.getElementById("popUp");
 let score = 0;
 let answered = false;
+let currentIndex = 0;
+
 let ourQuestions = "questions.json";
 // shuffle function for ramdom ex. answers
 const shuffle = (array) => {
@@ -58,7 +60,10 @@ fetch(ourQuestions)
   .then((res) => res.json())
   .then((data) => {
     // //console.log(data.nicolle);
-    let currentIndex = 0;
+    let qstate = data.nicolle.map(() => ({
+      shuffle: null,
+      answered: false,
+    }));
     //shuffled options for quiz
 
     showQuestion(currentIndex); //display the different questions by using the next button
@@ -102,12 +107,18 @@ fetch(ourQuestions)
       answered = false;
       nextBtn.setAttribute("notClickable", "");
     } //display the questions in your html
+
     function showOptions(currentIndex) {
-      const opts = data.nicolle[currentIndex].options;
-      const shuffled = shuffle([...opts]);
+      const q = data.nicolle[currentIndex];
+
+      if (!qstate[currentIndex].shuffled) {
+        qstate[currentIndex].shuffled = shuffle([...q.options]);
+      }
+
+      const opts = qstate[currentIndex].shuffled;
       answersShow.forEach((li, i) => {
         // show the options fron json array in the html shuffled
-        li.innerHTML = shuffled[i];
+        li.innerHTML = opts[i];
       });
       // //console.log("options:", opts);
       //// console.log("shuffled:", shuffled);
@@ -126,15 +137,14 @@ fetch(ourQuestions)
         }
         answered = true;
         nextBtn.removeAttribute("notClickable");
-// if statement for showing wrong / right answer
+        // if statement for showing wrong / right answer
         if (btn.innerText === data.nicolle[currentIndex].answer) {
           btn.style.backgroundColor = "#72bf6a";
         } else {
           btn.style.backgroundColor = "#f94449";
-          answersShow.forEach(option =>{
-            if(option.innerText === data.nicolle[currentIndex].answer){
+          answersShow.forEach((option) => {
+            if (option.innerText === data.nicolle[currentIndex].answer) {
               option.style.backgroundColor = "#72bf6a";
-
             }
           });
         }
@@ -150,7 +160,6 @@ fetch(ourQuestions)
     powerUp.addEventListener("click", function () {
       const correctAns = data.nicolle[currentIndex].answer;
       const buttons = Array.from(answersShow);
-      const correcBtn = buttons.find((b) => b.innerText === correctAns);
       const wrongBtn = buttons.filter((b) => b.innerText !== correctAns);
 
       const keepWrong = wrongBtn[Math.floor(Math.random() * wrongBtn.length)];
@@ -164,17 +173,19 @@ fetch(ourQuestions)
         b.style.visibility = "visible";
       });
     }
-
     // draw score functiion
     function drawScore() {
       score++;
       scoreShow.innerText = "Score: " + score + "/20";
+      scoreShow.classList.remove("is-animated");
+      void scoreShow.offsetWidth;
+      scoreShow.classList.add("is-animated");
     }
     function finalScoredraw() {
       finalScore.forEach((el) => {
         el.innerText = "Final score: " + score + "/20";
       });
-      console.log(finalScore);
+      // console.log(finalScore);
     }
     function endQuiz() {
       quiz.hidden = true;
@@ -192,44 +203,55 @@ fetch(ourQuestions)
         loseFeedbackScreen.style.display = "flex";
       }
     }
+    // js for switching betwheen pages
+
+    // ! change to false when you want to hide the quiz at the start
+
+    startScreen.hidden = false;
+    // ! change to true when you want to hide the quiz at the start
+
+    quiz.hidden = true;
+
+    startTheQuiz.addEventListener("click", () => {
+      startScreen.hidden = true;
+      quiz.hidden = false;
+      currentIndex = 0;
+      quiz.setAttribute("blurActive", "");
+    });
+    closeQuiz.addEventListener("click", () => {
+      startScreen.hidden = false;
+      quiz.hidden = true;
+      popUp.hidden = true;
+    });
+    retryBtn.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        score = 0;
+        scoreShow.innerText = "Score: 0/20";
+        console.log(score);
+        currentIndex = 0;
+        qstate = data.nicolle.map(() => ({
+          shuffled: null,
+          answered: false,
+        }));
+        quiz.hidden = false;
+        winFeedbackScreen.style.display = "none";
+        loseFeedbackScreen.style.display = "none";
+        showOptions(currentIndex);
+        showQuestion(currentIndex);
+      });
+    });
+    backToHomePage.addEventListener("click", () => {
+      startScreen.hidden = true;
+      // TODO: HERE COMES THE HOME PAGE.hidden = true;
+    });
+
+    homeBtn.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        // TODO: HERE COMES THE HOME PAGE .hidden = false;
+        winFeedbackScreen.style.display = "none";
+        loseFeedbackScreen.style.display = "none";
+      });
+    });
+
+    //
   });
-
-// js for switching betwheen pages
-
-// ! change to false when you want to hide the quiz at the start
-
-startScreen.hidden = false;
-// ! change to true when you want to hide the quiz at the start
-
-quiz.hidden = true;
-
-startTheQuiz.addEventListener("click", () => {
-  startScreen.hidden = true;
-  quiz.hidden = false;
-  quiz.setAttribute("blurActive", "");
-});
-closeQuiz.addEventListener("click", () => {
-  startScreen.hidden = false;
-  quiz.hidden = true;
-  popUp.hidden = true;
-});
-backToHomePage.addEventListener("click", () => {
-  startScreen.hidden = true;
-  // TODO: HERE COMES THE HOME PAGE.hidden = true;
-});
-retryBtn.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    quiz.hidden = false;
-    winFeedbackScreen.style.display = "none";
-    loseFeedbackScreen.style.display = "none";
-  });
-});
-homeBtn.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    // TODO: HERE COMES THE HOME PAGE .hidden = false;
-    winFeedbackScreen.style.display = "none";
-    loseFeedbackScreen.style.display = "none";
-  });
-});
-
-//

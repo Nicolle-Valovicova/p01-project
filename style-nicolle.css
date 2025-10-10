@@ -18,7 +18,7 @@ right ans color rgb(68, 255, 47)
 /* ? */
 /* //  */
 /* TODO */
-:root{
+:root {
   --box-shadow-color: #90875e;
 }
 * {
@@ -28,17 +28,45 @@ right ans color rgb(68, 255, 47)
 body {
   background-color: #08b2e3;
 }
-/* 'style for start screen */
+/* importnant styling */
 [hidden] {
   display: none !important;
 }
- [blurActive]{
+[blurActive] {
   filter: blur(4px) !important;
 }
-[notClickable]{
+[notClickable] {
   opacity: 0.5 !important;
   cursor: not-allowed !important;
 }
+/*  animations */
+.is-animated{
+  animation-duration: 1s;
+  animation-name: scoreAnimate ;
+}
+@keyframes scoreAnimate {
+  0% {
+    background-color: #ffebc6;
+    transform: scale(1);
+  }
+  50% {
+    background-color: #72bf6a;
+    transform: scale(1.1);
+  }
+  100% {
+    background-color: #ffebc6;
+    transform: scale(1);
+  }
+}
+/* reusable classes for js */
+  .wrongBtnStyle {
+    background-color: #f94449;
+  }
+  .rightBtnStyle {
+    background-color: #72bf6a;
+  }
+/* 'style for start screen */
+
 .startScreen {
   text-align: center;
   display: flex;
@@ -75,7 +103,7 @@ body {
   background-color: #ffc94c;
 }
 /* style for pop up  */
-.pop-upAlert{
+.pop-upAlert {
   position: absolute;
   background-color: #ffebc6;
   height: 250px;
@@ -90,30 +118,30 @@ body {
   left: 50%;
   transform: translate(-50%, -50%) scale(1.5);
   border-radius: 15px;
- -webkit-box-shadow: 0 0 5px 2px var(--box-shadow-color);
-    -moz-box-shadow: 0 0 5px 2px var(--box-shadow-color);
-    box-shadow: 0 0 5px 2px var(--box-shadow-color);
-  }
-.pop-upContain{
+  -webkit-box-shadow: 0 0 5px 2px var(--box-shadow-color);
+  -moz-box-shadow: 0 0 5px 2px var(--box-shadow-color);
+  box-shadow: 0 0 5px 2px var(--box-shadow-color);
+}
+.pop-upContain {
   padding: 20px;
 }
-.pop-upContain p{
+.pop-upContain p {
   padding-top: 10px;
 }
-#cancel{
- background-color: #ffb100;
+#cancel {
+  background-color: #ffb100;
   padding: 15px;
   border-radius: 10px;
   border: 0px;
-  margin:20px 20px 0;
+  margin: 20px 20px 0;
   left: 32%;
   position: relative;
   width: fit-content;
   transition: 0.3s ease;
   cursor: pointer;
 }
-#cancel:hover{
-   scale: 1.2;
+#cancel:hover {
+  scale: 1.2;
   background: #ffc94c;
 }
 /* style for header */
@@ -243,29 +271,30 @@ body {
   justify-content: center;
   height: 100vh;
 }
-#carSticker{
+#carSticker {
   position: absolute;
   rotate: 25deg;
-display: none;  width: 400px;
+  display: none;
+  width: 400px;
   right: 0;
   transform: translateY(150px);
 }
 .feedbackScreen h1 {
   color: #ffb100;
-  text-shadow:2px 2px #e6a102;
+  text-shadow: 2px 2px #e6a102;
   font-size: 6em;
   text-wrap: nowrap;
 }
 .feedbackScreen h3 {
-    color: #000000;
+  color: #000000;
   font-size: 2em;
 }
-.finalScore{
+.finalScore {
   color: #ffebc6;
-    font-size: 3em;
-    margin: 20px;
+  font-size: 3em;
+  margin: 20px;
 }
-.buttons{
+.buttons {
   cursor: pointer;
 }
 .rettryBtn img {
@@ -307,10 +336,10 @@ display: none;  width: 400px;
   .questions p {
     font-size: 30px;
   }
-  #carSticker{
+  #carSticker {
     width: 330px;
     top: 0;
-  transform: translateY(90px);
+    transform: translateY(90px);
   }
   .feedbackScreen h1 {
     font-size: 3em;
@@ -318,12 +347,11 @@ display: none;  width: 400px;
   .feedbackScreen h3 {
     font-size: 1.5em;
   }
-  .finalScore{
+  .finalScore {
     font-size: 2em;
     margin: 10px;
   }
-  .pop-upAlert{
-      transform: translate(-50%, -50%) scale(0.9);
-
+  .pop-upAlert {
+    transform: translate(-50%, -50%) scale(0.9);
   }
 }
