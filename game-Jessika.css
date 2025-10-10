@@ -141,13 +141,7 @@ body {
     background-color: rgb(255, 47, 47) !important;
 }
 
-.navigation-buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 1rem;
-}
+
 
 .power-up-btn, #prevBtn, #nextBtn {
     font-size: 1.2rem;
@@ -175,15 +169,7 @@ body {
     transform: none;
 }
 
-#prevBtn, #nextBtn {
-    background-color: #4ecdc4;
-    color: white;
-}
 
-#prevBtn:hover, #nextBtn:hover {
-    background-color: #45b7af;
-    transform: translateY(-2px);
-}
 
 .hidden {
     display: none !important;
@@ -209,10 +195,7 @@ body {
         font-size: 1.2rem;
     }
     
-    .navigation-buttons {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
+    
     
     .power-up-btn, #prevBtn, #nextBtn {
         width: 100%;

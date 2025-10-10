@@ -3,9 +3,8 @@ const choices = Array.from(document.querySelectorAll('.choice-text'));
 const progressText = document.querySelector('#progressText');
 const scoreText = document.querySelector('#score');
 const progressBarFull = document.querySelector('#progressBarFull');
-const nextBtn = document.getElementById("nextBtn");
-const prevBtn = document.getElementById("prevBtn");
 const fiftyFiftyBtn = document.getElementById("fiftyFiftyBtn");
+
 
 
 let currentQuestion = {};
@@ -18,8 +17,9 @@ let correctAnswersCount = 0;
 let answeredQuestions = new Set();
 
 
-const SCORE_POINTS = 100;
-const MAX_QUESTIONS = 20; 
+const CORRECT_POINTS = 100;
+const INCORRECT_PENALTY = 50;
+const MAX_QUESTIONS = 4;
 
 
 let questions = [
@@ -187,39 +187,29 @@ let questions = [
 
 ];
 
-// Initialize the game
+
 function initGame() {
-  console.log("🎮 Initializing game...");
+  console.log(" Initializing game...");
 
-  // Clear any previous data
-  clearPreviousData();
+  
 
-  // Add event listeners
-  nextBtn.addEventListener("click", goToNextQuestion);
-  prevBtn.addEventListener("click", goToPreviousQuestion);
+
+
   fiftyFiftyBtn.addEventListener("click", useFiftyFifty);
 
-  // Add click listeners to choices
+
   choices.forEach(choice => {
     choice.addEventListener('click', handleChoiceClick);
   });
 
-  // Start the game
   startGame();
 }
 
-// Clear previous quiz data
-function clearPreviousData() {
-  localStorage.removeItem('mostRecentScore');
-  localStorage.removeItem('correctAnswers');
-  localStorage.removeItem('totalQuestions');
-  localStorage.removeItem('quizCompleted');
-  console.log("🧹 Cleared previous quiz data");
-}
 
-// Start the game
+
+
 function startGame() {
-  console.log("🚀 Starting game...");
+  console.log(" Starting game...");
   questionCounter = 0;
   score = 0;
   correctAnswersCount = 0;
@@ -231,9 +221,9 @@ function startGame() {
   getNewQuestion();
 }
 
-// Get a new question
+
 function getNewQuestion() {
-  console.log(`📊 Progress: ${questionCounter}/${MAX_QUESTIONS}, Answered: ${answeredQuestions.size}`);
+  console.log(` Progress: ${questionCounter}/${MAX_QUESTIONS}, Answered: ${answeredQuestions.size}`);
 
   if (availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
     if (answeredQuestions.size < MAX_QUESTIONS) {
@@ -247,15 +237,13 @@ function getNewQuestion() {
   questionCounter++;
   updateProgress();
 
-  // Get random question
+
   const randomIndex = Math.floor(Math.random() * availableQuestions.length);
   currentQuestion = availableQuestions[randomIndex];
   currentIndex = questions.findIndex(q => q === currentQuestion);
 
-  // Remove the question from available questions
   availableQuestions.splice(randomIndex, 1);
 
-  // Display the question and options
   showQuestion(currentIndex);
   showOptions(currentIndex);
 
@@ -263,15 +251,23 @@ function getNewQuestion() {
   resetFiftyFifty();
   updateNavigationButtons();
 
-  console.log("❓ New question loaded:", currentQuestion.question);
+  console.log(" New question loaded:", currentQuestion.question);
 }
 
-// Show question
+
+
+function resetChoiceStyles() {
+  
+  choices.forEach(choice => {
+    choice.parentElement.classList.remove('correct', 'incorrect');
+  });
+}
+
 function showQuestion(index) {
   questionElement.innerText = questions[index].question;
+  resetChoiceStyles(); 
 }
 
-// Show options
 function showOptions(index) {
   const question = questions[index];
   const optionTexts = [
@@ -285,9 +281,35 @@ function showOptions(index) {
     choice.innerText = optionTexts[i];
     choice.dataset.number = (i + 1).toString();
   });
+  
+  resetChoiceStyles(); 
 }
 
-// Handle choice click
+
+function goToNextQuestion() {
+  if (!answeredQuestions.has(currentIndex) && answeredQuestions.size < MAX_QUESTIONS) {
+    alert('Please answer this question before moving to the next one!');
+    return;
+  }
+
+  if (currentIndex < questions.length - 1 && questionCounter < MAX_QUESTIONS) {
+    currentIndex++;
+    questionCounter++;
+    showQuestion(currentIndex);
+    showOptions(currentIndex);
+    updateProgress();
+    acceptingAnswers = true;
+    resetFiftyFifty();
+    updateNavigationButtons();
+    
+   
+    resetChoiceStyles();
+  } else if (answeredQuestions.size >= MAX_QUESTIONS) {
+    endGame();
+  }
+}
+
+
 function handleChoiceClick(e) {
   if (!acceptingAnswers) return;
 
@@ -295,71 +317,72 @@ function handleChoiceClick(e) {
   const selectedChoice = e.target;
   const selectedAnswer = parseInt(selectedChoice.dataset.number);
 
-  console.log(`🎯 Answer selected: ${selectedAnswer}, Correct: ${currentQuestion.answer}`);
+  console.log(` Answer selected: ${selectedAnswer}, Correct: ${currentQuestion.answer}`);
 
-  // Mark this question as answered
   answeredQuestions.add(currentIndex);
 
-  const classToApply = selectedAnswer === currentQuestion.answer ? 'correct' : 'incorrect';
+  const isCorrect = selectedAnswer === currentQuestion.answer;
+  const classToApply = isCorrect ? 'correct' : 'incorrect';
 
-  if (classToApply === 'correct') {
-    incrementScore(SCORE_POINTS);
+  if (isCorrect) {
+    incrementScore(CORRECT_POINTS);
     correctAnswersCount++;
-    console.log("✅ Correct! Score:", score, "Correct count:", correctAnswersCount);
+    console.log(` Correct! +${CORRECT_POINTS} points. Score: ${score}, Correct: ${correctAnswersCount}`);
   } else {
-    console.log("❌ Incorrect!");
+    decrementScore(INCORRECT_PENALTY);
+    console.log(` Incorrect! -${INCORRECT_PENALTY} points. Score: ${score}, Correct: ${correctAnswersCount}`);
+  
   }
 
   selectedChoice.parentElement.classList.add(classToApply);
 
   setTimeout(() => {
+
     selectedChoice.parentElement.classList.remove(classToApply);
+    
     updateNavigationButtons();
     getNewQuestion();
   }, 1000);
 }
+function decrementScore(points) {
+  score = Math.max(0, score - points);
+  updateScore();
+}
 
-// 50/50 Power-up
+
+
 function useFiftyFifty() {
   if (!acceptingAnswers) return;
 
-  console.log("🎲 Using 50/50 power-up!");
+  console.log(" Using 50/50 power-up!");
 
   const correctAnswerNumber = currentQuestion.answer;
   const correctChoice = document.querySelector(`.choice-text[data-number="${correctAnswerNumber}"]`);
 
-  // Get all incorrect choices
   const incorrectChoices = choices.filter(choice => {
     return parseInt(choice.dataset.number) !== correctAnswerNumber;
   });
 
-  // Shuffle and select two incorrect choices to hide
   const shuffledIncorrect = [...incorrectChoices].sort(() => Math.random() - 0.5);
   const choicesToHide = shuffledIncorrect.slice(0, 2);
 
-  // Hide the selected incorrect choices
   choicesToHide.forEach(choice => {
     choice.parentElement.classList.add('hidden');
   });
 
-  // Disable the power-up
   fiftyFiftyBtn.disabled = true;
   fiftyFiftyBtn.style.opacity = '0.5';
 }
 
-// Reset 50/50 for new question
 function resetFiftyFifty() {
-  // Show all choices
   choices.forEach(choice => {
     choice.parentElement.classList.remove('hidden');
   });
 
-  // Enable the power-up
   fiftyFiftyBtn.disabled = false;
   fiftyFiftyBtn.style.opacity = '1';
 }
 
-// Navigation functions
 function goToNextQuestion() {
   if (!answeredQuestions.has(currentIndex) && answeredQuestions.size < MAX_QUESTIONS) {
     alert('Please answer this question before moving to the next one!');
@@ -393,7 +416,6 @@ function goToPreviousQuestion() {
   }
 }
 
-// Update navigation buttons
 function updateNavigationButtons() {
   const currentQuestionAnswered = answeredQuestions.has(currentIndex);
 
@@ -403,62 +425,53 @@ function updateNavigationButtons() {
   }
 }
 
-// Update progress
 function updateProgress() {
   progressText.innerText = `Question ${questionCounter} of ${MAX_QUESTIONS}`;
   progressBarFull.style.width = `${(questionCounter / MAX_QUESTIONS) * 100}%`;
 }
 
-// Update score
 function updateScore() {
   scoreText.innerText = score;
 }
 
-// Increment score
 function incrementScore(points) {
   score += points;
   updateScore();
 }
 
-// Show completion warning
 function showCompletionWarning() {
   const unansweredCount = MAX_QUESTIONS - answeredQuestions.size;
   alert(`You need to answer all ${MAX_QUESTIONS} questions! You still have ${unansweredCount} question(s) left.`);
 }
 
-// End game - FIXED VERSION
 function endGame() {
-  console.log("🏁 Game completed!");
-  console.log("📊 Final stats:", {
+  console.log(" Game completed!");
+  console.log(" Final stats:", {
     score: score,
     correctAnswers: correctAnswersCount,
     totalQuestions: MAX_QUESTIONS,
     answeredQuestions: answeredQuestions.size
   });
 
-  // Save data to localStorage - FIXED
   localStorage.setItem('mostRecentScore', score.toString());
   localStorage.setItem('correctAnswers', correctAnswersCount.toString());
   localStorage.setItem('totalQuestions', MAX_QUESTIONS.toString());
   localStorage.setItem('quizCompleted', new Date().getTime().toString());
 
-  // Verify data was saved
   const savedScore = localStorage.getItem('mostRecentScore');
   const savedCorrect = localStorage.getItem('correctAnswers');
   const savedTotal = localStorage.getItem('totalQuestions');
 
-  console.log("💾 Data saved to localStorage:", {
+  console.log(" Data saved to localStorage:", {
     savedScore: savedScore,
     savedCorrect: savedCorrect,
     savedTotal: savedTotal
   });
 
-  // Show confirmation before redirect
   setTimeout(() => {
-    console.log("🔀 Redirecting to end page...");
+    console.log(" Redirecting to end page...");
     window.location.href = 'end-Jessika.html';
   }, 500);
 }
 
-// Start the game when the page loads
 document.addEventListener('DOMContentLoaded', initGame);
