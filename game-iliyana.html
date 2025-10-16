@@ -18,25 +18,30 @@
     <!-- Quiz container -->
     <div class="container" id="quiz">
       <header class="quiz-header">
-        <h2 class="quiz-title">First question</h2>
         <div class="quiz-timer">
           <span class="material-symbols-outlined"> timer</span>
           <p class="time-duration">15s</p>
         </div>
+        <p class="question-status"><b>1</b> of <b> 20 </b> questions</p>
+        <p class="score">Score: <b>0</b></p>
+
       </header>
 
       <h1 class="quiz-question"></h1>
+
       <div class="answer-options">
         <button class="answer-btn"></button>
         <button class="answer-btn"></button>
         <button class="answer-btn"></button>
         <button class="answer-btn"></button>
       </div>
-      <p class="score">Score: <b>0</b></p>
+
       <button class="fifty-btn">50/50</button>
+      <div id="pop-up" class="modal" hidden> 
+        <h2>You have used all your 50/50 hints</h2>
+      </div>
 
       <div class="quiz-footer">
-        <p class="question-status"><b>1</b> of <b> 20 </b> questions</p>
         <button class="next-question-btn">
           next
           <span class="material-symbols-outlined">arrow_right_alt</span>

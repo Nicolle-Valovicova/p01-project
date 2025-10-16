@@ -1,9 +1,73 @@
 .answer-btn.correct {
-  background-color: green;
+  background-color: #44FF2F;
   color: white;
 }
 
 .answer-btn.wrong {
-  background-color: red;
+  background-color: #FF2F2F;
   color: white;
+}
+
+body {
+  background-color: #08b2e3;
+}
+
+.answer-options {
+  display: flex;
+  flex-wrap: wrap; /* laat ze naar een nieuwe rij gaan */
+  justify-content: center; /* horizontaal centreren */
+  gap: 10px; 
+  max-width: 500px; /* optioneel: zodat ze niet te ver uit elkaar staan */
+  margin: 0 auto;
+}
+
+.answer-btn {
+  flex: 1 1 45%;
+  max-width: 300px;   
+  height: 80px;       
+  font-size: 20px;   
+  border-radius: 12px;
+  text-align: center;
+  color: black;
+  background-color:#ffb100;
+}
+
+h1 {
+   text-align: center;
+   font-size: 40px;
+}
+
+.quiz-header {
+  display: flex;
+  align-items: center; 
+  background-color: #ffebc6;
+  justify-content: space-between; /* verdeelt de 3 onderdelen */
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.quiz-timer {
+  display: flex;
+  align-items: center;
+  gap: 1px; 
+}
+
+.quiz-timer .material-symbols-outlined {
+  font-size: 24px;
+  color: #333;
+}
+
+
+.modal {
+    border: 2px solid grey;
+}
+
+.zichtbaar {
+    display: block;
+}
+
+.onzichtbaarheid {
+    display: none;
 }

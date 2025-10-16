@@ -7,11 +7,29 @@
 .container {
     text-align: center;
     color: white;
-}   
+}
 
 .container h1 {
     font-size: 50px;
     margin-bottom: 20px;
 }
 
+p {
+    font-size: 20px;
+}
+
+.btn {
+   background-color: rgba(255, 255, 255, 0.7); /* Blauwe kleur met 70% zichtbaarheid */
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 15px 150px; /* extra ruimte binnen de knop */
+  width: 200px;
+  height: 50px;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: rgb(255, 255, 255); /* Volledig zichtbaar bij hover */
+}
 

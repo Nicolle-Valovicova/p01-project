@@ -117,6 +117,8 @@ buttons.forEach ((btn, i) =>  {
 btn.textContent = q.answers [i];
 btn.classList.remove ("correct", "wrong");
 btn.disabled = false;
+btn.style.visibility = "visible";
+popup.classList.remove("zichtbaar");
 btn.onclick = () => checkAnswer (i, btn);
 })
 }
@@ -133,28 +135,52 @@ function checkAnswer(i, btn) {
     btn.classList.add("wrong");
   }
    
-  let buttons = document.querySelectorAll(".answer-btn");
-  buttons.forEach((btn, i) => {
-    btn.disabled = true;
-    if (i === q.correct) {
-      btn.classList.add("correct");
+  let buttons = document.querySelectorAll(".answer-btn"); // alle antwoord knoppen selecteren
+  buttons.forEach((btn, i) => { 
+    btn.disabled = true; 
+    if (i === q.correct) { 
+      btn.classList.add("correct"); 
     }
   });
 }
 
-const nextBtn = document.querySelector(".next-question-btn");
-const questionStatus = document.querySelector(".question-status b");
+const nextBtn = document.querySelector(".next-question-btn"); 
+const questionStatus = document.querySelector(".question-status b"); 
 const scoreDisplay = document.querySelector(".score b");
+const popup = document.querySelector('#pop-up');
 
 
-nextBtn.addEventListener("click", () => {
-  currentQuestion++;            
-  if(currentQuestion < questions.length) {
+nextBtn.addEventListener("click", () => { 
+  currentQuestion++;             
+  if(currentQuestion < questions.length) { 
     showQuestion();             
     questionStatus.textContent = currentQuestion + 1; 
   } 
   });
 
+const fiftyBtn = document.querySelector(".fifty-btn");
+
+fiftyBtn.addEventListener("click", () => {
+  if (fiftyUses < maxFiftyUses) {
+    fiftyUses++;
+
+    let q = questions[currentQuestion];
+    let buttons = document.querySelectorAll(".answer-btn");
+
+
+    let wrongButtons = [];
+    buttons.forEach((btn, i) => {
+      if (i !== q.correct) wrongButtons.push(btn);
+    });
+
+
+    let random = wrongButtons.sort(() => 0.5 - Math.random()).slice(0, 2);
+    random.forEach(btn => btn.style.visibility = "hidden");
+
+  } else {
+    popup.classList.add("zichtbaar");
+  }
+});
 
 showQuestion();
 
