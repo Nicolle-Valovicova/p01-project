@@ -150,9 +150,9 @@ const scoreDisplay = document.querySelector(".score b");
 const popup = document.querySelector('#pop-up');
 
 
-nextBtn.addEventListener("click", () => { 
-  currentQuestion++;             
-  if(currentQuestion < questions.length) { 
+nextBtn.addEventListener("click", () => {
+  currentQuestion++;
+  if (currentQuestion < questions.length) {
     showQuestion();             
     questionStatus.textContent = currentQuestion + 1; 
   } 
@@ -179,8 +179,22 @@ fiftyBtn.addEventListener("click", () => {
 
   } else {
     popup.classList.add("zichtbaar");
+    setTimeout(() => {
+      popup.classList.remove("zichtbaar");
+    }, 2000);
   }
 });
 
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i +1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+
 showQuestion();
+shuffleArray(questions);
+
 
