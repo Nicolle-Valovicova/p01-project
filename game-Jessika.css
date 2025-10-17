@@ -142,7 +142,6 @@ body {
 }
 
 
-
 .power-up-btn, #prevBtn, #nextBtn {
     font-size: 1.2rem;
     padding: 0.8rem 1.5rem;
@@ -168,7 +167,6 @@ body {
     cursor: not-allowed;
     transform: none;
 }
-
 
 
 .hidden {

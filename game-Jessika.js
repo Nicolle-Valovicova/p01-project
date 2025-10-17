@@ -191,7 +191,7 @@ let questions = [
 function initGame() {
   console.log(" Initializing game...");
 
-  
+
 
 
 
@@ -249,7 +249,7 @@ function getNewQuestion() {
 
   acceptingAnswers = true;
   resetFiftyFifty();
-  updateNavigationButtons();
+ 
 
   console.log(" New question loaded:", currentQuestion.question);
 }
@@ -257,7 +257,7 @@ function getNewQuestion() {
 
 
 function resetChoiceStyles() {
-  
+
   choices.forEach(choice => {
     choice.parentElement.classList.remove('correct', 'incorrect');
   });
@@ -265,7 +265,7 @@ function resetChoiceStyles() {
 
 function showQuestion(index) {
   questionElement.innerText = questions[index].question;
-  resetChoiceStyles(); 
+  resetChoiceStyles();
 }
 
 function showOptions(index) {
@@ -281,8 +281,8 @@ function showOptions(index) {
     choice.innerText = optionTexts[i];
     choice.dataset.number = (i + 1).toString();
   });
-  
-  resetChoiceStyles(); 
+
+  resetChoiceStyles();
 }
 
 
@@ -300,9 +300,9 @@ function goToNextQuestion() {
     updateProgress();
     acceptingAnswers = true;
     resetFiftyFifty();
-    updateNavigationButtons();
-    
-   
+
+
+
     resetChoiceStyles();
   } else if (answeredQuestions.size >= MAX_QUESTIONS) {
     endGame();
@@ -331,7 +331,7 @@ function handleChoiceClick(e) {
   } else {
     decrementScore(INCORRECT_PENALTY);
     console.log(` Incorrect! -${INCORRECT_PENALTY} points. Score: ${score}, Correct: ${correctAnswersCount}`);
-  
+
   }
 
   selectedChoice.parentElement.classList.add(classToApply);
@@ -339,8 +339,8 @@ function handleChoiceClick(e) {
   setTimeout(() => {
 
     selectedChoice.parentElement.classList.remove(classToApply);
-    
-    updateNavigationButtons();
+
+
     getNewQuestion();
   }, 1000);
 }
@@ -364,7 +364,7 @@ function useFiftyFifty() {
   });
 
   const shuffledIncorrect = [...incorrectChoices].sort(() => Math.random() - 0.5);
-  const choicesToHide = shuffledIncorrect.slice(0, 2);
+  const choicesToHide = incorrectChoices.slice(0, 2);
 
   choicesToHide.forEach(choice => {
     choice.parentElement.classList.add('hidden');
@@ -397,33 +397,11 @@ function goToNextQuestion() {
     updateProgress();
     acceptingAnswers = true;
     resetFiftyFifty();
-    updateNavigationButtons();
   } else if (answeredQuestions.size >= MAX_QUESTIONS) {
     endGame();
   }
 }
 
-function goToPreviousQuestion() {
-  if (currentIndex > 0) {
-    currentIndex--;
-    questionCounter--;
-    showQuestion(currentIndex);
-    showOptions(currentIndex);
-    updateProgress();
-    acceptingAnswers = true;
-    resetFiftyFifty();
-    updateNavigationButtons();
-  }
-}
-
-function updateNavigationButtons() {
-  const currentQuestionAnswered = answeredQuestions.has(currentIndex);
-
-  if (nextBtn) {
-    nextBtn.disabled = !currentQuestionAnswered && answeredQuestions.size < MAX_QUESTIONS;
-    nextBtn.style.opacity = nextBtn.disabled ? '0.5' : '1';
-  }
-}
 
 function updateProgress() {
   progressText.innerText = `Question ${questionCounter} of ${MAX_QUESTIONS}`;
