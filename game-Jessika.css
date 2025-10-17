@@ -140,9 +140,7 @@ body {
 }
 
 
-.power-up-btn,
-#prevBtn,
-#nextBtn {
+.power-up-btn {
     font-size: 1.2rem;
     padding: 0.8rem 1.5rem;
     border: none;
