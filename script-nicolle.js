@@ -3,6 +3,7 @@ let answersShow = document.querySelectorAll(".answersShow");
 let prevBtn = document.getElementById("backbtn");
 let nextBtn = document.getElementById("nextBtn");
 let powerUp = document.getElementById("powerUp");
+let powerUpInfo = document.querySelector("#powerInfo");
 let scoreShow = document.getElementById("score");
 let winFeedbackScreen = document.getElementById("win");
 let loseFeedbackScreen = document.getElementById("lose");
@@ -19,7 +20,6 @@ const popUp = document.getElementById("popUp");
 let score = 0;
 let answered = false;
 let currentIndex = 0;
-
 let ourQuestions = "questions.json";
 // shuffle function for ramdom ex. answers
 const shuffle = (array) => {
@@ -71,7 +71,6 @@ fetch(ourQuestions)
     nextBtn.addEventListener("click", function () {
       if (!answered) {
         nextBtn.setAttribute("notClickable", "");
-
         return;
       }
       currentIndex++;
@@ -94,17 +93,21 @@ fetch(ourQuestions)
     prevBtn.addEventListener("click", function () {
       if (currentIndex > 0) {
         currentIndex--;
+        nextBtn.removeAttribute("notClickable");
 
         showQuestion(currentIndex);
         showOptions(currentIndex);
         allVisible();
       } else {
+        nextBtn.setAttribute("notClickable", "");
         console.log("nothing works");
       }
     });
     function showQuestion(currentIndex) {
       questionShow.innerHTML = data.nicolle[currentIndex].question;
       answered = false;
+      powerUp.disabled = false;
+
       nextBtn.setAttribute("notClickable", "");
     } //display the questions in your html
 
@@ -131,6 +134,7 @@ fetch(ourQuestions)
         if (answered) return;
         const correct = data.nicolle[currentIndex].answer.trim();
         const choice = btn.textContent.trim();
+        powerUp.disabled = true;
 
         if (choice === correct) {
           drawScore();
@@ -140,6 +144,7 @@ fetch(ourQuestions)
         // if statement for showing wrong / right answer
         if (btn.innerText === data.nicolle[currentIndex].answer) {
           btn.style.backgroundColor = "#72bf6a";
+          return;
         } else {
           btn.style.backgroundColor = "#f94449";
           answersShow.forEach((option) => {
@@ -156,8 +161,23 @@ fetch(ourQuestions)
         btn.style.backgroundColor = "#ffb100";
       });
     }
-
+    let usage = 3;
+    let powerUsed = false;
     powerUp.addEventListener("click", function () {
+      if (powerUsed) return;
+      powerUsed = true;
+
+      if (usage > 0) {
+        usage--;
+        console.log(usage);
+        powerUpInfo.innerHTML = `<p>You can use this feature ${usage}x</p>`;
+      }
+      // make the powerup btn unclickable
+      if (usage == 0) {
+        powerUp.disabled = true;
+        powerUp.setAttribute("notClickable", "");
+      }
+
       const correctAns = data.nicolle[currentIndex].answer;
       const buttons = Array.from(answersShow);
       const wrongBtn = buttons.filter((b) => b.innerText !== correctAns);
@@ -173,6 +193,18 @@ fetch(ourQuestions)
         b.style.visibility = "visible";
       });
     }
+    nextBtn.addEventListener("click", () => {
+      powerUsed = false;
+    });
+    // function for showing the infos for the feature btns
+    powerUpInfo.classList.add("notVisible");
+
+    powerUp.addEventListener("mouseover", () => {
+      powerUpInfo.classList.remove("notVisible");
+    });
+    powerUp.addEventListener("mouseout", () => {
+      powerUpInfo.classList.add("notVisible");
+    });
     // draw score functiion
     function drawScore() {
       score++;

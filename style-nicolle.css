@@ -39,10 +39,13 @@ body {
   opacity: 0.5 !important;
   cursor: not-allowed !important;
 }
+.notVisible {
+  display: none;
+}
 /*  animations */
-.is-animated{
+.is-animated {
   animation-duration: 1s;
-  animation-name: scoreAnimate ;
+  animation-name: scoreAnimate;
 }
 @keyframes scoreAnimate {
   0% {
@@ -59,12 +62,12 @@ body {
   }
 }
 /* reusable classes for js */
-  .wrongBtnStyle {
-    background-color: #f94449;
-  }
-  .rightBtnStyle {
-    background-color: #72bf6a;
-  }
+.wrongBtnStyle {
+  background-color: #f94449;
+}
+.rightBtnStyle {
+  background-color: #72bf6a;
+}
 /* 'style for start screen */
 
 .startScreen {
@@ -192,12 +195,24 @@ body {
   width: fit-content;
   background-color: #ffebc6;
   border-radius: 10px;
+  border: none;
+  font-size: 25px;
+  font-weight: bold;
   cursor: pointer;
   transition: 0.3s ease;
 }
 #powerUp:hover {
   transform: scale(1.1);
   background-color: #fffefc;
+}
+.powerInfo {
+  background-color: #ffebc6;
+  opacity: 0.5 !important;
+  padding: 10px;
+  border-radius: 5px;
+  width: fit-content;
+  position: absolute;
+  transform: translateY(-40px) translateX(120px);
 }
 /* style for questions */
 .questionsAppear {
