@@ -3,17 +3,17 @@ let questions = [
     { 
        question: "What is the name of Joe's first major love interest?",
        answers: ["Beck", "Love", "Peach", "Candace"],
-       correct: 0
+       correct: 3,
     },
     {
         question: "Where does Joe work in New York?",
         answers: ["Library", "Coffee shop", "Bookstore", "Music store"],
-        correct: 2
+        correct: 2,
     },
     {
         question: "Who is Beck's wealthy best friend?",
         answers: ["Delilah", "Love", "Karen", "Peach"],
-        correct: 3
+        correct: 3,
     },
     {
         question: "What is the name of Joe's young neighbor?",
@@ -73,7 +73,7 @@ let questions = [
     {
         question: "Who turns out to be the real 'Eat The Rich' killer in season 4?",
         answers: ["Joe", "Marienne", "Rhys Montrose", "Kate"],
-        correct: 2,
+        correct: 0,
     },
     {
         question: "What is Joe's favorite place to stalk his crush in season 1?",
@@ -105,10 +105,18 @@ let questions = [
 
 let currentQuestion = 0; // bijhouden welke vraag je nu hebt.
 let score = 0; // score bijhouden
+let fouten = 0; // aantal foute antwoorden
+const maxFouten = 10; // max aantal fouten
 let fiftyUses = 0; // telt hoeveel keer je hem hebt gebruikt
 const maxFiftyUses = 5; // maximaal aantal keer
+let fiftyUsedThisQuestion = false; 
+let questionAnswered = false; // 50/50 button
+let timer;             // voor setInterval
+let timeLeft = 15;     // 15 seconden per vraag
 
 function showQuestion() {
+
+  startTimer();
   let q = questions[currentQuestion];
   document.querySelector(".quiz-question").textContent = q.question;
   
@@ -119,48 +127,80 @@ btn.classList.remove ("correct", "wrong");
 btn.disabled = false;
 btn.style.visibility = "visible";
 popup.classList.remove("zichtbaar");
+fiftyUsedThisQuestion = false;
+questionAnswered = false; 
 btn.onclick = () => checkAnswer (i, btn);
 })
 }
 
 function checkAnswer(i, btn) {
+  if (questionAnswered) return; // voorkomt meerdere clicks
+  questionAnswered = true;
+
   let q = questions[currentQuestion];
 
-
   if (i === q.correct) {
-    btn.classList.add("correct");
+    if (btn) btn.classList.add("correct");
     score++;
-    scoreDisplay.textContent = score; 
+    scoreDisplay.textContent = score;
   } else {
-    btn.classList.add("wrong");
+    if (btn) btn.classList.add("wrong");
+    fouten++;
+    score--;
+    scoreDisplay.textContent = score;
   }
-   
-  let buttons = document.querySelectorAll(".answer-btn"); // alle antwoord knoppen selecteren
-  buttons.forEach((btn, i) => { 
-    btn.disabled = true; 
-    if (i === q.correct) { 
-      btn.classList.add("correct"); 
+
+  let buttons = document.querySelectorAll(".answer-btn");
+  buttons.forEach((btnEl, idx) => {
+    btnEl.disabled = true;
+    if (idx === q.correct) {
+      btnEl.classList.add("correct");
     }
   });
+
+
+
+  if (fouten >= maxFouten) {
+    localStorage.setItem("finalScore", score);
+    localStorage.setItem("totalQuestions", questions.length);
+    localStorage.setItem("wrongAnswers", fouten);
+    window.location.href = "fail-scherm.html";
+  }
 }
 
 const nextBtn = document.querySelector(".next-question-btn"); 
 const questionStatus = document.querySelector(".question-status b"); 
 const scoreDisplay = document.querySelector(".score b");
 const popup = document.querySelector('#pop-up');
-
+const timerDisplay = document.querySelector(".quiz-timer .time-duration");
 
 nextBtn.addEventListener("click", () => {
+  // check of de huidige vraag beantwoord is
+  if (!questionAnswered) {
+    popup.classList.add("zichtbaar");
+    setTimeout(() => {
+      popup.classList.remove("zichtbaar");
+    }, 1000);
+    return;
+  }
   currentQuestion++;
   if (currentQuestion < questions.length) {
     showQuestion();             
     questionStatus.textContent = currentQuestion + 1; 
-  } 
+  } else {
+    // Laatste vraag beantwoord → naar eindscherm
+    localStorage.setItem("finalScore", score);
+    localStorage.setItem("totalQuestions", questions.length);
+
+    window.location.href = "eindscherm-iliyana.html"; // hier gaat hij naar je eindscherm
+  }
   });
 
 const fiftyBtn = document.querySelector(".fifty-btn");
 
 fiftyBtn.addEventListener("click", () => {
+  if (fiftyUsedThisQuestion) return;
+
   if (fiftyUses < maxFiftyUses) {
     fiftyUses++;
 
@@ -174,14 +214,16 @@ fiftyBtn.addEventListener("click", () => {
     });
 
 
-    let random = wrongButtons.sort(() => 0.5 - Math.random()).slice(0, 2);
+    let random = wrongButtons.sort(() => 0.5 - Math.random()).slice(0, 2); 
     random.forEach(btn => btn.style.visibility = "hidden");
+
+    fiftyUsedThisQuestion = true;
 
   } else {
     popup.classList.add("zichtbaar");
     setTimeout(() => {
       popup.classList.remove("zichtbaar");
-    }, 2000);
+    }, 1000);
   }
 });
 
@@ -193,8 +235,30 @@ function shuffleArray(array) {
   return array;
 }
 
+function startTimer() {
+  clearInterval(timer); // oude timer stoppen
+  timeLeft = 15;        // reset timer
+  updateTimerDisplay();
 
-showQuestion();
+  timer = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+
+    if (timeLeft <= 0) {
+  clearInterval(timer);
+  checkAnswer(-1);
+  setTimeout(() => nextBtn.click(), 1000); // na 1 seconde naar volgende vraag
+}
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  if (timerDisplay) timerDisplay.textContent = timeLeft + "s";
+}
+
+
 shuffleArray(questions);
+showQuestion();
+
 
 
