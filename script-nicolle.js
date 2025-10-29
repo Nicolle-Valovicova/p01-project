@@ -90,19 +90,7 @@ fetch(ourQuestions)
       }
     });
 
-    prevBtn.addEventListener("click", function () {
-      if (currentIndex > 0) {
-        currentIndex--;
-        nextBtn.removeAttribute("notClickable");
-
-        showQuestion(currentIndex);
-        showOptions(currentIndex);
-        allVisible();
-      } else {
-        nextBtn.setAttribute("notClickable", "");
-        console.log("nothing works");
-      }
-    });
+   
     function showQuestion(currentIndex) {
       questionShow.innerHTML = data.nicolle[currentIndex].question;
       answered = false;
@@ -175,6 +163,7 @@ fetch(ourQuestions)
       // make the powerup btn unclickable
       if (usage == 0) {
         powerUp.disabled = true;
+                powerUpInfo.innerHTML = `<p>You can't use this feature anymore!</p>`;
         powerUp.setAttribute("notClickable", "");
       }
 
@@ -194,7 +183,9 @@ fetch(ourQuestions)
       });
     }
     nextBtn.addEventListener("click", () => {
+      if (usage > 0){
       powerUsed = false;
+      }
     });
     // function for showing the infos for the feature btns
     powerUpInfo.classList.add("notVisible");
@@ -285,5 +276,6 @@ fetch(ourQuestions)
       });
     });
 
-    //
+
+
   });
