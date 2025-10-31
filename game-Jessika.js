@@ -19,7 +19,7 @@ let answeredQuestions = new Set();
 
 const CORRECT_POINTS = 100;
 const INCORRECT_PENALTY = 50;
-const MAX_QUESTIONS = 4;
+const MAX_QUESTIONS = 20;
 
 
 let questions = [
