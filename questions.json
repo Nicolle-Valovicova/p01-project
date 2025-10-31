@@ -38,7 +38,7 @@
   {
     "question": "How many cookie types are there?",
     "options": ["4", "12", "8", "16"],
-    "answer": "8"
+    "answer": "4"
   },
   {
     "question": "What element would a cookie like Pure Vanilla be?",
@@ -56,7 +56,7 @@
     "answer": "18 episodes of Crispia and 10 episodes of Beast-Yeast, totaling 28."
   },
   {
-    "question": "What is the name of the cookie that is the opposite of Pure Vanilla Cookie",
+    "question": "What would be the name of this cookie? (picture of Shadow milk cookie)",
     "options": ["Shadow milk cookie", "Blue Jester", "Corruptor", "Deceit"],
     "answer": "Shadow milk cookie"
   },
