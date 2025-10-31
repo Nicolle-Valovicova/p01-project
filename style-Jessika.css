@@ -10,6 +10,14 @@ p {
     font-size: 40px;
     color: white;
 }
+ul, h2 {
+    font-weight: bold;
+      text-align: center;
+    font-size: 20px;
+    color: white;
+    background: linear-gradient(90deg, rgb(255, 177, 0, 0.6));
+    border-radius: 4px;
+}
 
 #Startpage {
     background-image: url('https://www.gamerefinery.com/wp-content/uploads/2021/10/cookie-run-kingdom-revenue-spike-header-image.png');
