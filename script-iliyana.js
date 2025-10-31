@@ -126,7 +126,8 @@ btn.textContent = q.answers [i];
 btn.classList.remove ("correct", "wrong");
 btn.disabled = false;
 btn.style.visibility = "visible";
-popup.classList.remove("zichtbaar");
+popupAnswer.classList.remove("zichtbaar");
+popupFifty.classList.remove("zichtbaar");
 fiftyUsedThisQuestion = false;
 questionAnswered = false; 
 btn.onclick = () => checkAnswer (i, btn);
@@ -171,15 +172,15 @@ function checkAnswer(i, btn) {
 const nextBtn = document.querySelector(".next-question-btn"); 
 const questionStatus = document.querySelector(".question-status b"); 
 const scoreDisplay = document.querySelector(".score b");
-const popup = document.querySelector('#pop-up');
+const popupAnswer = document.querySelector("#pop-up");
+const popupFifty = document.querySelector("#pop-up-1");
 const timerDisplay = document.querySelector(".quiz-timer .time-duration");
 
 nextBtn.addEventListener("click", () => {
-  // check of de huidige vraag beantwoord is
   if (!questionAnswered) {
-    popup.classList.add("zichtbaar");
+    popupAnswer.classList.add("zichtbaar");
     setTimeout(() => {
-      popup.classList.remove("zichtbaar");
+      popupAnswer.classList.remove("zichtbaar");
     }, 1000);
     return;
   }
@@ -195,6 +196,9 @@ nextBtn.addEventListener("click", () => {
     window.location.href = "eindscherm-iliyana.html"; // hier gaat hij naar je eindscherm
   }
   });
+
+
+
 
 const fiftyBtn = document.querySelector(".fifty-btn");
 
@@ -220,9 +224,9 @@ fiftyBtn.addEventListener("click", () => {
     fiftyUsedThisQuestion = true;
 
   } else {
-    popup.classList.add("zichtbaar");
+    popupFifty.classList.add("zichtbaar");
     setTimeout(() => {
-      popup.classList.remove("zichtbaar");
+      popupFifty.classList.remove("zichtbaar");
     }, 1000);
   }
 });
@@ -255,6 +259,7 @@ function startTimer() {
 function updateTimerDisplay() {
   if (timerDisplay) timerDisplay.textContent = timeLeft + "s";
 }
+
 
 
 shuffleArray(questions);
