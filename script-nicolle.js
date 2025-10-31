@@ -262,10 +262,9 @@ fetch(ourQuestions)
         showQuestion(currentIndex);
       });
     });
-    backToHomePage.addEventListener("click", () => {
-      startScreen.hidden = true;
-      // TODO: HERE COMES THE HOME PAGE.hidden = true;
-    });
+    // backToHomePage.addEventListener("click", () => {
+    //   startScreen.hidden = true;
+    // });
 
     homeBtn.forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -277,7 +276,6 @@ fetch(ourQuestions)
   });
 
 // script for home page ###########################
-const tiles = document.getElementsByClassName(".card");
 
    
 
