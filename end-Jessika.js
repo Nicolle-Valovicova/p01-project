@@ -95,7 +95,7 @@ function addScoreFeedback(score, accuracy) {
     finalScoreElement.style.color = color;
 }
 
-
+//zonder dit kan je de scoren niet zien
 function testWithSampleData() {
     console.log(" Testing with sample data...");
     

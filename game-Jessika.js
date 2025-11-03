@@ -73,7 +73,7 @@ let questions = [
   },
   {
     question: 'What is the other company?',
-    Choice1: 'There is no other company)',
+    Choice1: 'There is no other company',
     Choice2: 'Tencent Games (China)',
     Choice3: 'Mizaki',
     Choice4: 'Climana',
@@ -237,7 +237,7 @@ function getNewQuestion() {
   questionCounter++;
   updateProgress();
 
-
+//berekent een willekeurig vraag.
   const randomIndex = Math.floor(Math.random() * availableQuestions.length);
   currentQuestion = availableQuestions[randomIndex];
   currentIndex = questions.findIndex(q => q === currentQuestion);
@@ -288,7 +288,6 @@ function showOptions(index) {
 
 function goToNextQuestion() {
   if (!answeredQuestions.has(currentIndex) && answeredQuestions.size < MAX_QUESTIONS) {
-    alert('Please answer this question before moving to the next one!');
     return;
   }
 
