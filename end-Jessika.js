@@ -1,4 +1,5 @@
-
+const username = document.querySelector('#username')
+const saveSoreBtn = document.querySelector('#saveScoreBtn')
 const scoreDisplay = document.getElementById('scoreDisplay');
 const correctCount = document.getElementById('correctCount');
 const accuracy = document.getElementById('accuracy');
